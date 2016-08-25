@@ -70,6 +70,15 @@ html, body {
   font-size: 13px;
   font-weight: bold;
 
+  .nav-logo-box {
+    background-color: #ffffff;
+    width: 100%;
+    img {
+      width: 90%;
+      margin: 5%;
+    }
+  }
+
   // language selector for mobile devices
   .lang-selector {
     display: none;
