@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * Attendees
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-08-25T16:18:19.244-04:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-08-26T15:51:37.800-04:00")
 public class Attendees   {
   @SerializedName("custom_fields_names")
   private List<CustomFieldsNames> customFieldsNames = new ArrayList<CustomFieldsNames>();

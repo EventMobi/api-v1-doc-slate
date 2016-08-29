@@ -35,7 +35,7 @@ import io.swagger.client.model.Response;
 /**
  * Sections
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-08-25T16:18:19.244-04:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-08-26T15:51:37.800-04:00")
 public class Sections   {
   @SerializedName("response")
   private Response response = null;
