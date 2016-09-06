@@ -1,14 +1,5 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/lord/img/master/logo-slate.png" alt="Slate: API Documentation Generator" width="226">
-  <br>
-  <a href="https://travis-ci.org/lord/slate"><img src="https://travis-ci.org/lord/slate.svg?branch=master" alt="Build Status"></a>
-</p>
-
-<p align="center">Slate helps you create beautiful, intelligent, responsive API documentation.</p>
-
-<p align="center"><img src="https://dl.dropboxusercontent.com/u/95847291/github%20images/slate/slate_screenshot_new.png" width=700 alt="Screenshot of Example Documentation created with Slate"></p>
-
-<p align="center"><em>The example above was created with Slate. Check it out at <a href="https://lord.github.io/slate">lord.github.io/slate</a>.</em></p>
+# Eventmobi API Documentation Solution 
+## Slate Automation from Swagger and CloudElements
 
 Features
 ------------
@@ -39,68 +30,35 @@ You're going to need:
  - **Linux or OS X** — Windows may work, but is unsupported.
  - **Ruby, version 2.0 or newer**
  - **Bundler** — If Ruby is already installed, but the `bundle` command doesn't work, just run `gem install bundler` in a terminal.
+ - **Node.js > 0.10** - to run the expend.js to render $ref in Swagger 
+ - **PHP > 5.0** - to run the Swagger2Slate.phar tool to convert swagger.json to Slate markdown
 
 ### Getting Set Up
 
-1. Fork this repository on Github.
-2. Clone *your forked repository* (not our original one) to your hard drive with `git clone https://github.com/YOURUSERNAME/slate.git`
-3. `cd slate`
-4. Initialize and start Slate. You can either do this locally, or with Vagrant:
-
 ```shell
-# either run this to run locally
-bundle install
-bundle exec middleman server
+# 1. first get swagger.json file
 
-# OR run this to run with vagrant
-vagrant up
+./pull-CE-swagger.sh
+
+#this will download the most recent V1.1 Eventmobi API swagger.json from CloudElements
+
+# 2. convert swagger to slate
+./convert-swagger.sh 	
+
+#this will expand the swagger.json to swagger-expanded.json (to render $ref) and then convert to ./source/index.html.md for slate
+
+# 3. publich or serve
+./deploy.sh 	# to deploy this to github page
+./server.sh 	# to start middleman ruby server
+
+# 4. SDK generation
+./sdk/gen.sh java
+
+# this will use swagger-codegen cli 2.2.1 to generate java code
+# Available languages: [android, aspnet5, async-scala, csharp, cpprest, dart, flash, python-flask, go, groovy, java, jaxrs, jaxrs-cxf, jaxrs-resteasy, jaxrs-spec, inflector, javascript, javascript-closure-angular, jmeter, nancyfx, nodejs-server, objc, perl, php, python, qt5cpp, ruby, scala, scalatra, silex-PHP, sinatra, rails5, slim, spring, dynamic-html, html, swagger, swagger-yaml, swift, tizen, typescript-angular2, typescript-angular, typescript-node, typescript-fetch, akka-scala, CsharpDotNet2, clojure, haskell, lumen, go-server
+
 ```
 
-You can now see the docs at http://localhost:4567. Whoa! That was fast!
+##Questions?
 
-Now that Slate is all set up your machine, you'll probably want to learn more about [editing Slate markdown](https://github.com/lord/slate/wiki/Markdown-Syntax), or [how to publish your docs](https://github.com/lord/slate/wiki/Deploying-Slate).
-
-If you'd prefer to use Docker, instructions are available [in the wiki](https://github.com/lord/slate/wiki/Docker).
-
-Companies Using Slate
----------------------------------
-
-* [NASA](https://api.nasa.gov)
-* [IBM Cloudant](https://docs.cloudant.com/api.html)
-* [Travis-CI](https://docs.travis-ci.com/api/)
-* [Mozilla](http://mozilla.github.io/localForage/)
-* [Appium](http://appium.io/slate/en/master)
-* [Dwolla](https://docs.dwolla.com/)
-* [Clearbit](https://clearbit.com/docs)
-* [Coinbase](https://developers.coinbase.com/api)
-* [Parrot Drones](http://developer.parrot.com/docs/bebop/)
-* [Fidor Bank](http://docs.fidor.de/)
-
-You can view more in [the list on the wiki](https://github.com/lord/slate/wiki/Slate-in-the-Wild).
-
-Need Help? Found a bug?
---------------------
-
-[Submit an issue](https://github.com/lord/slate/issues) to the Slate Github if you need any help. And, of course, feel free to submit pull requests with bug fixes or changes.
-
-Contributors
---------------------
-
-Slate was built by [Robert Lord](https://lord.io) while interning at [TripIt](https://www.tripit.com/).
-
-Thanks to the following people who have submitted major pull requests:
-
-- [@chrissrogers](https://github.com/chrissrogers)
-- [@bootstraponline](https://github.com/bootstraponline)
-- [@realityking](https://github.com/realityking)
-- [@cvkef](https://github.com/cvkef)
-
-Also, thanks to [Sauce Labs](http://saucelabs.com) for helping sponsor the project.
-
-Special Thanks
---------------------
-- [Middleman](https://github.com/middleman/middleman)
-- [jquery.tocify.js](https://github.com/gfranko/jquery.tocify.js)
-- [middleman-syntax](https://github.com/middleman/middleman-syntax)
-- [middleman-gh-pages](https://github.com/edgecase/middleman-gh-pages)
-- [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
+Ask (Leon Li)[mailto:leon.li@eventmobi.com]
