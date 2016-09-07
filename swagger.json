@@ -1,4 +1,5 @@
 {
+    "swagger": "2.0",
     "info": {
         "title": "EventMobi API V2 Spec",
         "description": "Eventmobi Public API documentation.\n\nPlease refer to [developer site for tutotials, SDK and helps](http://google.ca).\n\nUpdated Aug 2016. Please refer to the [patch notes for details](http://google.ca).\n",
@@ -8,54 +9,30 @@
     "schemes": [
         "https"
     ],
-    "basePath": "/en/api/v2/",
+    "basePath": "/en/api/v2",
     "produces": [
         "application/json"
     ],
-    "swagger": "2.0",
     "paths": {
         "/events": {
             "get": {
-                "summary": "Get all events",
+                "summary": "GET events",
                 "description": "List all the events associated with the current organization by API Key or authentication credentials. \n\nOnly basic event infomation will be provided in response to idenitfy events. Please use /events/{eventID} to retrieve details of each event.\n",
                 "tags": [
                     "Event"
                 ],
                 "parameters": [
                     {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Limits the number of returned results",
-                        "required": false,
-                        "type": "number",
-                        "format": "int32"
+                        "$ref": "#/parameters/LimitParam"
                     },
                     {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Define the offset index of returned results",
-                        "required": false,
-                        "type": "number",
-                        "format": "int32"
+                        "$ref": "#/parameters/OffsetParam"
                     },
                     {
-                        "name": "ext_id_system",
-                        "in": "query",
-                        "description": "the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.",
-                        "required": false,
-                        "type": "string"
+                        "$ref": "#/parameters/IDSystemParam"
                     },
                     {
-                        "name": "timestamp_format",
-                        "in": "query",
-                        "description": "the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.",
-                        "required": false,
-                        "type": "string",
-                        "default": "GMT/UTC timestamp integer",
-                        "enum": [
-                            "GMT/UTC timestamp integer",
-                            "ISO string with timezone"
-                        ]
+                        "$ref": "#/parameters/TimestampFormat"
                     }
                 ],
                 "responses": {
@@ -74,14 +51,15 @@
                             "$ref": "#/definitions/Error"
                         }
                     }
-                }
+                },
+                "x-category": "Event"
             },
             "post": {
-                "summary": "Add new event",
+                "summary": "POST events",
                 "tags": [
                     "Event"
                 ],
-                "description": "\nCreate a new event in the organization that API Key associated. The required fields below should be inclueded in request body. If success, a 200 response message will include the event object added. \n\nThe Event ID is saved with set of (System + ID Value). An event can have multiple IDs in different Systems. This enables easy integration and API access with/from external systems.  \n\nFor this POST request, \"id\" is optional. If \"id\" field is provided but no \"ext_id_system\" is specified, this external ID will be added with System Name of \"External\". Or if the \"ext_id_system\" is provided, this System Name will be used. \n\nAdditional IDs can be added in the external_ids property. Please refer to the data structure below. \n\nAn Eventmobi internal ID (unique integer number) will always be automatically created with system name of \"Eventmobi\", and use as default ID system if \"ext_id_system\" doesn't exist.\n\nAPI will reject the creation request if the ID exists for each System Name. \n\n*Please note*: Depends on your package or subscription, you may not have permission to create event with a 402 response. In that case, you may want to [contact our Sales team](http://eventmobi.com).\n",
+                "description": "Placeholder\n",
                 "parameters": [
                     {
                         "$ref": "#/parameters/IDSystemParam"
@@ -137,7 +115,7 @@
         },
         "/events/{event_id}": {
             "get": {
-                "summary": "Get specific event by ID",
+                "summary": "GET event",
                 "parameters": [
                     {
                         "$ref": "#/parameters/EventIDParam"
@@ -168,7 +146,7 @@
                 }
             },
             "patch": {
-                "summary": "Update selective data in specific event by ID",
+                "summary": "PATCH event",
                 "parameters": [
                     {
                         "$ref": "#/parameters/EventIDParam"
@@ -206,7 +184,7 @@
                 }
             },
             "put": {
-                "summary": "Overwrite record of specific event by ID",
+                "summary": "PUT event",
                 "parameters": [
                     {
                         "$ref": "#/parameters/EventIDParam"
@@ -244,72 +222,9 @@
                 }
             }
         },
-        "/events/{event_id}/sections": {
-            "get": {
-                "summary": "Get all sections",
-                "parameters": [
-                    {
-                        "$ref": "#/parameters/EventIDParam"
-                    },
-                    {
-                        "$ref": "#/parameters/IDSystemParam"
-                    },
-                    {
-                        "$ref": "#/parameters/TimestampFormat"
-                    }
-                ],
-                "tags": [
-                    "Section"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "The sections in array",
-                        "schema": {
-                            "$ref": "#/definitions/PlaceHolder"
-                        }
-                    },
-                    "default": {
-                        "description": "General 400/500 error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/events/{event_id}/sections/people_sections": {
-            "get": {
-                "summary": "Get all people sections",
-                "parameters": [
-                    {
-                        "$ref": "#/parameters/EventIDParam"
-                    },
-                    {
-                        "$ref": "#/parameters/TimestampFormat"
-                    }
-                ],
-                "tags": [
-                    "Section"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "The people sections in array",
-                        "schema": {
-                            "$ref": "#/definitions/PlaceHolder"
-                        }
-                    },
-                    "default": {
-                        "description": "General 400/500 error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
-        },
         "/events/{event_id}/people": {
             "get": {
-                "summary": "People Data Overview",
+                "summary": "GET people",
                 "description": "This request will return an overview of people data statistics in specific events. \n",
                 "parameters": [
                     {
@@ -341,9 +256,9 @@
                 }
             }
         },
-        "/events/{event_id}/people/person": {
+        "/events/{event_id}/people/data": {
             "get": {
-                "summary": "Retrieve people data in array",
+                "summary": "GET person",
                 "description": "This request will return an array of people data statistics in specific events. Default paginition is the first 20 records from offset 0. \n",
                 "parameters": [
                     {
@@ -354,6 +269,12 @@
                     },
                     {
                         "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitParam"
+                    },
+                    {
+                        "$ref": "#/parameters/OffsetParam"
                     }
                 ],
                 "tags": [
@@ -375,8 +296,8 @@
                 }
             },
             "post": {
-                "summary": "Create new Person record",
-                "description": "Placeholder\n",
+                "summary": "POST person",
+                "description": "Add new person in the event\n",
                 "parameters": [
                     {
                         "$ref": "#/parameters/EventIDParam"
@@ -402,13 +323,7 @@
                     "200": {
                         "description": "The person record created",
                         "schema": {
-                            "$ref": "#/definitions/PlaceHolder"
-                        }
-                    },
-                    "403": {
-                        "description": "One or more fields is read-only or auto-generated. It should not set in request.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
+                            "$ref": "#/definitions/PersonObjectResponse"
                         }
                     },
                     "default": {
@@ -420,9 +335,9 @@
                 }
             }
         },
-        "/events/{event_id}/people/person/{person_id}": {
+        "/events/{event_id}/people/data/{person_id}": {
             "get": {
-                "summary": "Retrieve specific person record",
+                "summary": "GET person_id",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -457,7 +372,7 @@
                 }
             },
             "patch": {
-                "summary": "Update specific person record",
+                "summary": "PATCH person_id",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -488,12 +403,6 @@
                         "description": "The person record updated",
                         "schema": {
                             "$ref": "#/definitions/PersonObjectResponse"
-                        }
-                    },
-                    "403": {
-                        "description": "One or more fields is read-only or auto-generated. It should not set in request.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
                         }
                     },
                     "default": {
@@ -505,7 +414,7 @@
                 }
             },
             "put": {
-                "summary": "Overwrite specific person record",
+                "summary": "PUT person_id",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -538,12 +447,6 @@
                             "$ref": "#/definitions/PersonObjectResponse"
                         }
                     },
-                    "403": {
-                        "description": "One or more fields is read-only or auto-generated. It should not set in request.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
                     "default": {
                         "description": "General 400/500 error",
                         "schema": {
@@ -553,7 +456,7 @@
                 }
             },
             "delete": {
-                "summary": "Overwrite specific person record",
+                "summary": "DELETE person_id",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -574,15 +477,9 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "The person record updated",
+                        "description": "The person record deleted",
                         "schema": {
                             "$ref": "#/definitions/PersonObjectResponse"
-                        }
-                    },
-                    "403": {
-                        "description": "One or more fields is read-only or auto-generated. It should not set in request.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
                         }
                     },
                     "default": {
@@ -594,7 +491,7 @@
                 }
             }
         },
-        "/events/{event_id}/people/person/{person_id}/groups": {
+        "/events/{event_id}/people/data/{person_id}/groups": {
             "get": {
                 "summary": "Retrieve the groups specific person belongs to",
                 "description": "Placeholder\n",
@@ -630,10 +527,12 @@
                         }
                     }
                 }
-            },
-            "patch": {
-                "summary": "Update specific person record",
-                "description": "Placeholder\n",
+            }
+        },
+        "/events/{event_id}/people/data/{person_id}/groups/{group_id}": {
+            "post": {
+                "summary": "Add person to a group",
+                "description": "Add the Person to the Group. The group_id can be either group name or group ID. If group name has special character, it must be encoded as URL. Body is not needed and will be ignored for this request.\n",
                 "parameters": [
                     {
                         "$ref": "#/parameters/EventIDParam"
@@ -642,79 +541,28 @@
                         "$ref": "#/parameters/PersonIDParam"
                     },
                     {
-                        "$ref": "#/parameters/IDSystemParam"
-                    },
-                    {
-                        "$ref": "#/parameters/TimestampFormat"
-                    },
-                    {
-                        "name": "person",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/PersonObjectRequest"
-                        }
-                    }
-                ],
-                "tags": [
-                    "People"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "The person record updated",
-                        "schema": {
-                            "$ref": "#/definitions/PersonObjectResponse"
-                        }
-                    },
-                    "403": {
-                        "description": "One or more fields is read-only or auto-generated. It should not set in request.",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    },
-                    "default": {
-                        "description": "General 400/500 error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "summary": "Overwrite specific person record",
-                "description": "Placeholder\n",
-                "parameters": [
-                    {
-                        "$ref": "#/parameters/EventIDParam"
-                    },
-                    {
-                        "$ref": "#/parameters/PersonIDParam"
+                        "$ref": "#/parameters/GroupIDParam"
                     },
                     {
                         "$ref": "#/parameters/IDSystemParam"
                     },
                     {
                         "$ref": "#/parameters/TimestampFormat"
-                    },
-                    {
-                        "name": "person",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/PersonObjectRequest"
-                        }
                     }
                 ],
                 "tags": [
-                    "People"
+                    "People",
+                    "Group"
                 ],
                 "responses": {
                     "200": {
-                        "description": "The person record updated",
+                        "description": "The groups person belongs to",
                         "schema": {
-                            "$ref": "#/definitions/PersonObjectResponse"
+                            "$ref": "#/definitions/ResponseGroupArray"
                         }
                     },
-                    "403": {
-                        "description": "One or more fields is read-only or auto-generated. It should not set in request.",
+                    "409": {
+                        "description": "The person already belongs to the group.",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -728,7 +576,54 @@
                 }
             },
             "delete": {
-                "summary": "Overwrite specific person record",
+                "summary": "Delete person from group",
+                "description": "Remove the person from the group. The group_id can be either group name or group ID. If group name has special character, it must be encoded as URL. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/PersonIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/GroupIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The groups person belongs to",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseGroupArray"
+                        }
+                    },
+                    "404": {
+                        "description": "The person doesn't belong to the group.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/people/data/{person_id}/sessions": {
+            "get": {
+                "summary": "Retrieve the sessions that this person will attend as attendee",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -745,19 +640,1459 @@
                     }
                 ],
                 "tags": [
-                    "People"
+                    "People",
+                    "Session"
                 ],
                 "responses": {
                     "200": {
-                        "description": "The person record updated",
+                        "description": "List of sessions",
                         "schema": {
-                            "$ref": "#/definitions/PersonObjectResponse"
+                            "$ref": "#/definitions/PlaceHolder"
                         }
                     },
-                    "403": {
-                        "description": "One or more fields is read-only or auto-generated. It should not set in request.",
+                    "default": {
+                        "description": "General 400/500 error",
                         "schema": {
                             "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/people/data/{person_id}/sessions/{session_id}": {
+            "post": {
+                "summary": "Add a session to specifc person (as attendee)",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/PersonIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The sessions person (as attendee) belongs to",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "409": {
+                        "description": "The person already has this session.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete person from session attendee list",
+                "description": "Delete person from session attendee list\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/PersonIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The sessions person (as attendee) belongs to",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "404": {
+                        "description": "The person doesn't belong to the attendee list.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/people/groups": {
+            "get": {
+                "summary": "Get all defined People Groups",
+                "description": "This request will return an array of people group details. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The array of groups defined in People",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResponseGeneralGroup"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create new People Group",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "group",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RequestPeopleGroup"
+                        }
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The group created",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseGeneralGroup"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/people/groups/{group_id}": {
+            "get": {
+                "summary": "Get specifc People Group info",
+                "description": "This request will return the detail of specific people group. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/GroupIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The People Group definition",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseGeneralGroup"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete People Group ",
+                "description": "This will delete the People Group and remove all members from this group. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/GroupIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The group deleted",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/people/groups/{group_id}/members": {
+            "get": {
+                "summary": "Get all People inside th group",
+                "description": "This request will return basic info of people in the group. This will only include people ID, name, email and timestamp.\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/GroupIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The member of people in the specific group.",
+                        "schema": {
+                            "$ref": "#/definitions/ResponsePeopleGroupMember"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/people/custom_fields": {
+            "get": {
+                "summary": "Get all defined Custom Fields",
+                "description": "This request will return an array of people custom fields. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Customize"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The array of custom fields defined in People",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResponseGeneralCustomFields"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create new People Custom Field",
+                "description": "This request will use the field definition in body to create new custom field for People.\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "field",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RequestGeneralCustomField"
+                        }
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Customize"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The custom field created",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseGeneralCustomFields"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/people/custom_fields/{field_id}": {
+            "put": {
+                "summary": "Overwrite Custom Fields definition",
+                "description": "This request will overwrite the definition of specific customer field. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/FieldIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "field",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RequestGeneralCustomField"
+                        }
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Customize"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The new definition of custom field",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResponseGeneralCustomFields"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update Custom Fields definition",
+                "description": "This request will update the definition of specific customer field. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/FieldIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "field",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RequestGeneralCustomField"
+                        }
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Customize"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The new definition of custom field",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResponseGeneralCustomFields"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete Custom Fields definition",
+                "description": "This request will delete the definition of specific customer field. All values of this custome field saved in people records will be deleted.\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/FieldIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Customize"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The rest of custome fields available in People",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResponseGeneralCustomFields"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions": {
+            "get": {
+                "summary": "GET sessions",
+                "description": "This request will return an overview of event schedule, session and track info. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The overview of all session data",
+                        "schema": {
+                            "$ref": "#/definitions/SessionsOverview"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/data": {
+            "get": {
+                "summary": "GET person",
+                "description": "This request will return an array of sessions data statistics in specific events. Default paginition is the first 20 records from offset 0. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitParam"
+                    },
+                    {
+                        "$ref": "#/parameters/OffsetParam"
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The array of sessions.",
+                        "schema": {
+                            "$ref": "#/definitions/SessionRecordsResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "POST session",
+                "description": "Defining a new session\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "session",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/SessionObjectRequest"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The session record created",
+                        "schema": {
+                            "$ref": "#/definitions/SessionObjectResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/data/{session_id}": {
+            "get": {
+                "summary": "GET session_id",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The single session record",
+                        "schema": {
+                            "$ref": "#/definitions/SessionObjectResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "summary": "PATCH session_id",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "session",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/SessionObjectRequest"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The session record updated",
+                        "schema": {
+                            "$ref": "#/definitions/SessionObjectResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "PUT session_id",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "session",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/SessionObjectRequest"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The session record updated",
+                        "schema": {
+                            "$ref": "#/definitions/SessionObjectResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "DELETE session_id",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The session record that successfully deleted.",
+                        "schema": {
+                            "$ref": "#/definitions/SessionObjectResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/data/{session_id}/attendees": {
+            "get": {
+                "summary": "Retrieve the attendees of specific session",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of attendees",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/data/{session_id}/attendees/{person_id}": {
+            "post": {
+                "summary": "Add an attendee to specifc session",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/PersonIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The attendees",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "409": {
+                        "description": "The attendee people is already in the session.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete person from session attendee list",
+                "description": "Delete person from session attendee list\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/PersonIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success deleted"
+                    },
+                    "404": {
+                        "description": "The attendee people doesn't belong to the session.",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/tracks": {
+            "get": {
+                "summary": "Get all defined Session Tracks",
+                "description": "This request will return an array of session track details. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Session",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The array of tracks defined in Sessions",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResponseGeneralGroup"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create new session track",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "track",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The session track created",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseGeneralGroup"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/tracks/{group_id}": {
+            "get": {
+                "summary": "Get specifc Session Track info",
+                "description": "This request will return the detail of specific session track. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/GroupIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Session",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The Session Track definition",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseGeneralGroup"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete Session Track",
+                "description": "This will delete the Session Track and remove all sessions from this track. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/GroupIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Session",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The track deleted",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/tracks/{group_id}/list": {
+            "get": {
+                "summary": "Get all sessions in the track",
+                "description": "This request will return basic info of sessions in the track. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/GroupIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Session",
+                    "Group"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The list of sessions in the specific track.",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/custom_fields": {
+            "get": {
+                "summary": "Get all defined Custom Fields",
+                "description": "This request will return an array of people custom fields. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Session",
+                    "Customize"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The array of custom fields defined in People",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResponseGeneralCustomFields"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create new People Custom Field",
+                "description": "This request will use the field definition in body to create new custom field for People.\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "field",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RequestGeneralCustomField"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session",
+                    "Customize"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The custom field created",
+                        "schema": {
+                            "$ref": "#/definitions/ResponseGeneralCustomFields"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/custom_fields/{field_id}": {
+            "put": {
+                "summary": "Overwrite Custom Fields definition",
+                "description": "This request will overwrite the definition of specific customer field. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/FieldIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "field",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RequestGeneralCustomField"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session",
+                    "Customize"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The new definition of custom field",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResponseGeneralCustomFields"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update Custom Fields definition",
+                "description": "This request will update the definition of specific customer field. \n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/FieldIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "field",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/RequestGeneralCustomField"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session",
+                    "Customize"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The new definition of custom field",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResponseGeneralCustomFields"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete Custom Fields definition",
+                "description": "This request will delete the definition of specific customer field. All values of this custome field saved in people records will be deleted.\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/FieldIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Session",
+                    "Customize"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The rest of custome fields available in Sessions",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResponseGeneralCustomFields"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/event/{event_id}/resources/pictures": {
+            "get": {
+                "summary": "Get the info of pictures uploaded for specific event",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Resource"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the array of picture info",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ResourceResponse"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Upload new picture resource.",
+                "description": "In person profile or company logo, this uploaded picture can be used with the response filename (not url).\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "resource",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceRequest"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Resource"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the uploaded picture",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/event/{event_id}/resources/pictures/{resource_id}": {
+            "get": {
+                "summary": "Get the info of specifc picture uploaded",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/ResourceIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    }
+                ],
+                "tags": [
+                    "Resource"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the uploaded picture info",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "replace the uploaded picture with the same filename",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "$ref": "#/parameters/ResourceIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/TimestampFormat"
+                    },
+                    {
+                        "name": "resource",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceRequest"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Resource"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the updated picture info",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceResponse"
                         }
                     },
                     "default": {
@@ -776,7 +2111,7 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "description": "the default Eventmobi ID of event."
+                    "description": "the target Eventmobi ID of event."
                 },
                 "external_ids": {
                     "type": "array",
@@ -806,9 +2141,6 @@
                 },
                 "event_dates": {
                     "$ref": "#/definitions/EventDates"
-                },
-                "event_urls": {
-                    "$ref": "#/definitions/EventURLs"
                 }
             }
         },
@@ -970,16 +2302,16 @@
                     "type": "integer",
                     "description": "the number of groups defined"
                 },
+                "custom_field_number": {
+                    "type": "integer",
+                    "description": "the number of custom fields"
+                },
                 "groups": {
                     "type": "array",
                     "description": "the groups defined in this event.",
                     "items": {
-                        "$ref": "#/definitions/ResponseGeneralGroups"
+                        "$ref": "#/definitions/ResponseGeneralGroup"
                     }
-                },
-                "custom_field_number": {
-                    "type": "integer",
-                    "description": "the number of custom fields"
                 },
                 "custom_fields": {
                     "type": "array",
@@ -1176,6 +2508,283 @@
                 }
             }
         },
+        "SessionsOverview": {
+            "type": "object",
+            "description": "The statistics of sessions data",
+            "properties": {
+                "session_number": {
+                    "type": "integer",
+                    "description": "session number in this event. You may use this number for better query pagination."
+                },
+                "track_number": {
+                    "type": "integer",
+                    "description": "the number of groups defined"
+                },
+                "custom_field_number": {
+                    "type": "integer",
+                    "description": "the number of custom fields"
+                },
+                "session_role_number": {
+                    "type": "integer",
+                    "description": "the number of session roles fields"
+                },
+                "tracks": {
+                    "type": "array",
+                    "description": "the session groups defined in this event.",
+                    "items": {
+                        "$ref": "#/definitions/ResponseGeneralGroup"
+                    }
+                },
+                "custom_fields": {
+                    "type": "array",
+                    "description": "the custom fields defined in sessions",
+                    "items": {
+                        "$ref": "#/definitions/ResponseGeneralCustomFields"
+                    }
+                },
+                "sessions_roles": {
+                    "type": "array",
+                    "description": "the roles defined in sessions",
+                    "items": {
+                        "$ref": "#/definitions/ResponseGeneralCustomFields"
+                    }
+                },
+                "timestamps": {
+                    "$ref": "#/definitions/Timestamps"
+                }
+            }
+        },
+        "SessionRecordsResponse": {
+            "type": "object",
+            "description": "the query of sessions",
+            "properties": {
+                "query_string": {
+                    "type": "string",
+                    "description": "the original query string. Offset and limit parameter will show default value (offset=0&limit=20) if not provided in original request."
+                },
+                "record_number": {
+                    "type": "integer",
+                    "description": "the number of recodes that matches query. If no query filters requested, this will be the total number of people."
+                },
+                "session_list": {
+                    "type": "array",
+                    "description": "the array of sessions",
+                    "items": {
+                        "$ref": "#/definitions/SessionObjectResponse"
+                    }
+                }
+            }
+        },
+        "SessionObjectRequest": {
+            "type": "object",
+            "properties": {
+                "session_id": {
+                    "type": "string",
+                    "description": "the unique session id"
+                },
+                "external_ids": {
+                    "type": "array",
+                    "description": "the external IDs used for integrations",
+                    "items": {
+                        "$ref": "#/definitions/IDs"
+                    }
+                },
+                "session_name": {
+                    "type": "string"
+                },
+                "session_description": {
+                    "type": "string",
+                    "description": "the html encoded string. Please ensure the correct gramma."
+                },
+                "session_date": {
+                    "type": "string",
+                    "format": "YYYY-MM-DD",
+                    "description": "the session date in YYYY-MM-DD format"
+                },
+                "session_start_time": {
+                    "type": "string",
+                    "format": "HH-MM",
+                    "description": "the session start time in HH-MM in 24hour"
+                },
+                "session_end_time": {
+                    "type": "string",
+                    "format": "HH-MM",
+                    "description": "the session end time in HH-MM in 24hour"
+                },
+                "speakers": {
+                    "type": "array",
+                    "description": "the people ID as session speakers. External ID supported if request use ext_id_system parameter",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "session_tracks": {
+                    "type": "array",
+                    "description": "the ID of tracks this session belongs to",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "external_links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/URLLink"
+                    }
+                },
+                "docs": {
+                    "type": "array",
+                    "description": "the docs linked to the people",
+                    "items": {
+                        "$ref": "#/definitions/DocLink"
+                    }
+                },
+                "session_roles": {
+                    "type": "array",
+                    "description": "the session roles like Speaker, Moderator, etc. Attendees are not in this list. If you want to manage/update this list, you will need to provide the full array of roles. [Issue@Ryan do we support another endpoint like /roles]",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "role_name": {
+                                "type": "string",
+                                "description": "currently only supports \"Speaker\" and \"Moderator\""
+                            },
+                            "people_list": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "description": "the people IDs assigned to this role"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "SessionObjectResponse": {
+            "type": "object",
+            "properties": {
+                "session_id": {
+                    "type": "string",
+                    "description": "the unique session id"
+                },
+                "external_ids": {
+                    "type": "array",
+                    "description": "the external IDs used for integrations",
+                    "items": {
+                        "$ref": "#/definitions/IDs"
+                    }
+                },
+                "session_name": {
+                    "type": "string"
+                },
+                "session_description": {
+                    "type": "string",
+                    "description": "the html encoded string. Please ensure the correct gramma."
+                },
+                "session_date": {
+                    "type": "string",
+                    "format": "YYYY-MM-DD",
+                    "description": "the session date in YYYY-MM-DD format"
+                },
+                "session_start_time": {
+                    "type": "string",
+                    "format": "HH-MM",
+                    "description": "the session start time in HH-MM in 24hour"
+                },
+                "session_end_time": {
+                    "type": "string",
+                    "format": "HH-MM",
+                    "description": "the session end time in HH-MM in 24hour"
+                },
+                "session_tracks": {
+                    "type": "array",
+                    "description": "the ID of tracks this session belongs to",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "external_links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/URLLink"
+                    }
+                },
+                "docs": {
+                    "type": "array",
+                    "description": "the docs linked to the people",
+                    "items": {
+                        "$ref": "#/definitions/DocLink"
+                    }
+                },
+                "session_roles": {
+                    "type": "array",
+                    "description": "the session roles like Speaker, Moderator, etc. Attendees are not in this list.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "role_name": {
+                                "type": "string",
+                                "description": "currently only supports \"Speaker\" and \"Moderator\""
+                            },
+                            "people_list": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "description": "the people IDs assigned to this role"
+                                }
+                            }
+                        }
+                    }
+                },
+                "timestamps": {
+                    "$ref": "#/definitions/Timestamps"
+                }
+            }
+        },
+        "ResourceRequest": {
+            "type": "object",
+            "description": "please provide the resource type and choose the resource info below.",
+            "properties": {
+                "resource_type": {
+                    "type": "string"
+                },
+                "upload_picture": {
+                    "$ref": "#/definitions/RequestUploadAssociatePicture"
+                }
+            }
+        },
+        "ResourceResponse": {
+            "type": "object",
+            "description": "the info of the resources uploaded. Event documents are not in this list.",
+            "properties": {
+                "resource_id": {
+                    "type": "string",
+                    "description": "the UUID of resource"
+                },
+                "resource_type": {
+                    "type": "string"
+                },
+                "filename": {
+                    "type": "string",
+                    "description": "the filename use for person profile photo, company logo, etc."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "the encoded URL to access resource"
+                },
+                "upload_filename": {
+                    "type": "string",
+                    "description": "the original filename before renaming or processing"
+                },
+                "upload_request": {
+                    "type": "string",
+                    "description": "if upload with request with upload_picture parameter in People/Companies/etc., this will be the API call path"
+                },
+                "timestamps": {
+                    "$ref": "#/definitions/Timestamps"
+                }
+            }
+        },
         "IDs": {
             "type": "object",
             "description": "The IDs from different systems. Used for integration mapping. A default Eventmobi ID will always be generated and cannot be changed once created. Additional IDs can be added/updated for external systems.",
@@ -1193,6 +2802,18 @@
         "DocLink": {
             "type": "string",
             "description": "The document ID"
+        },
+        "URLLink": {
+            "type": "object",
+            "description": "The extra links",
+            "properties": {
+                "link_name": {
+                    "type": "string"
+                },
+                "link_url": {
+                    "type": "string"
+                }
+            }
         },
         "RequestUploadAssociateDoc": {
             "type": "object",
@@ -1252,6 +2873,32 @@
                 }
             }
         },
+        "RequestGeneralCustomField": {
+            "type": "object",
+            "description": "The base custom field request",
+            "properties": {
+                "field_name": {
+                    "type": "string",
+                    "description": "the field name"
+                },
+                "view_permission": {
+                    "type": "string",
+                    "enum": [
+                        "Everyone",
+                        "Organizer and Data Owner",
+                        "Organizer"
+                    ]
+                },
+                "edit_permission": {
+                    "type": "string",
+                    "enum": [
+                        "Everyone",
+                        "Organizer and Data Owner",
+                        "Organizer"
+                    ]
+                }
+            }
+        },
         "ResponseGeneralCustomFields": {
             "type": "object",
             "description": "The base custom field model",
@@ -1282,7 +2929,7 @@
                 }
             }
         },
-        "ResponseGeneralGroups": {
+        "ResponseGeneralGroup": {
             "type": "object",
             "description": "The base response model of groups",
             "properties": {
@@ -1294,10 +2941,6 @@
                     "type": "string",
                     "description": "the unique name of group"
                 },
-                "member_number": {
-                    "type": "number",
-                    "description": "the auto-generated number of members in this group"
-                },
                 "group_color": {
                     "type": "string",
                     "format": "#RRGGBB",
@@ -1307,8 +2950,51 @@
                     "type": "string",
                     "description": "the optional note/explaination of this group"
                 },
+                "sub_group_ids": {
+                    "type": "array",
+                    "description": "the id array of sub-groups/sub-tracks",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "member_number": {
+                    "type": "number",
+                    "description": "the auto-generated number of members in this group"
+                },
                 "timestamps": {
                     "$ref": "#/definitions/Timestamps"
+                }
+            }
+        },
+        "ResponsePeopleGroupMember": {
+            "type": "array",
+            "description": "The basic info of members in people group",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "person_id": {
+                        "type": "string",
+                        "description": "the unique ID of person in people"
+                    },
+                    "external_ids": {
+                        "type": "array",
+                        "description": "the external IDs used for integrations",
+                        "items": {
+                            "$ref": "#/definitions/IDs"
+                        }
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email_address": {
+                        "type": "string"
+                    },
+                    "timestamps": {
+                        "$ref": "#/definitions/Timestamps"
+                    }
                 }
             }
         },
@@ -1320,11 +3006,47 @@
                 "properties": {
                     "group_id": {
                         "type": "string",
-                        "description": "the unique ID of group (?@Ryan)"
+                        "description": "the unique ID of group"
                     },
                     "group_name": {
                         "type": "string",
                         "description": "the name of group"
+                    }
+                }
+            }
+        },
+        "RequestPeopleGroup": {
+            "type": "object",
+            "description": "Define new group",
+            "properties": {
+                "group_name": {
+                    "type": "string",
+                    "description": "the unique name of group"
+                },
+                "group_color": {
+                    "type": "string",
+                    "format": "#RRGGBB",
+                    "description": "the HEX color code in #RRGGBB. If not provided, system will use default color."
+                },
+                "group_note": {
+                    "type": "string",
+                    "description": "the optional note/explaination of this group"
+                },
+                "group_members": {
+                    "type": "array",
+                    "description": "the members to be added to the group. Please provide either id or email.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "member_id": {
+                                "type": "string",
+                                "description": "the ID of people member"
+                            },
+                            "member_email": {
+                                "type": "string",
+                                "description": "the email of people."
+                            }
+                        }
                     }
                 }
             }
@@ -1414,6 +3136,34 @@
             "name": "person_id",
             "in": "path",
             "description": "the person ID of specific event.",
+            "required": true,
+            "type": "string"
+        },
+        "GroupIDParam": {
+            "name": "group_id",
+            "in": "path",
+            "description": "the group ID.",
+            "required": true,
+            "type": "string"
+        },
+        "FieldIDParam": {
+            "name": "field_id",
+            "in": "path",
+            "description": "the custome field ID.",
+            "required": true,
+            "type": "string"
+        },
+        "SessionIDParam": {
+            "name": "session_id",
+            "in": "path",
+            "description": "the session ID (in event schedule).",
+            "required": true,
+            "type": "string"
+        },
+        "ResourceIDParam": {
+            "name": "resource_id",
+            "in": "path",
+            "description": "the resource ID.",
             "required": true,
             "type": "string"
         },
