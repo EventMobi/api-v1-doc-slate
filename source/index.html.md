@@ -10,543 +10,12 @@ search: true
 
 
 
-## GET /events
-### Get events 
-
-```http
-GET /en/api/v2/events HTTP/1.1
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-[
-    {
-        "id": "string",
-        "external_ids": [
-            {
-                "id_system": "string",
-                "id": "string"
-            }
-        ],
-        "short_code": "string",
-        "name": "string",
-        "description": "string",
-        "language": "string",
-        "data_counters": {
-            "sections": "integer",
-            "people": "integer",
-            "sessions": "integer",
-            "companies": "integer",
-            "documents": "integer",
-            "maps": "integer"
-        },
-        "event_location": {
-            "location_name": "string",
-            "location_address": "string"
-        },
-        "event_dates": {
-            "start_date": "string",
-            "end_date": "string",
-            "time_zone_tz": "string",
-            "time_zone_offset": "string",
-            "time_format": "integer"
-        },
-        "event_urls": {
-            "event_app": "string",
-            "reg_app": "string",
-            "checkin_app": "string",
-            "cms_app": "string"
-        },
-        "timestamps": {
-            "request_timestamp": "string",
-            "creation_timestamp": "string",
-            "update_timestamp": "string"
-        }
-    }
-]
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-List all the events associated with the current organization by API Key or authentication credentials. 
-
-Only basic event infomation will be provided in response to idenitfy events. Please use /events/{eventID} to retrieve details of each event.
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-limit | query | number | Optional. Limits the number of returned results
-offset | query | number | Optional. Define the offset index of returned results
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | array[object] | An array of basic event info
-default | object | General 400/500 error
-
-## POST /events
-### Post events 
-
-```http
-POST /en/api/v2/events HTTP/1.1
-Content-Type: application/json
-
-{
-    "event": {
-        "id": "string",
-        "external_ids": [
-            {
-                "id_system": "string",
-                "id": "string"
-            }
-        ],
-        "short_code": "string",
-        "name": "string",
-        "description": "string",
-        "language": "string",
-        "event_location": {
-            "location_name": "string",
-            "location_address": "string"
-        },
-        "event_dates": {
-            "start_date": "string",
-            "end_date": "string",
-            "time_zone_tz": "string",
-            "time_zone_offset": "string",
-            "time_format": "integer"
-        }
-    }
-}
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-{
-    "id": "string",
-    "external_ids": [
-        {
-            "id_system": "string",
-            "id": "string"
-        }
-    ],
-    "short_code": "string",
-    "name": "string",
-    "description": "string",
-    "language": "string",
-    "data_counters": {
-        "sections": "integer",
-        "people": "integer",
-        "sessions": "integer",
-        "companies": "integer",
-        "documents": "integer",
-        "maps": "integer"
-    },
-    "event_location": {
-        "location_name": "string",
-        "location_address": "string"
-    },
-    "event_dates": {
-        "start_date": "string",
-        "end_date": "string",
-        "time_zone_tz": "string",
-        "time_zone_offset": "string",
-        "time_format": "integer"
-    },
-    "event_urls": {
-        "event_app": "string",
-        "reg_app": "string",
-        "checkin_app": "string",
-        "cms_app": "string"
-    },
-    "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
-    }
-}
-```
-```http
-HTTP/1.1 402 Payment Required
-Content-Type: application/json
-
-{
-    "code": "integer"
-}
-```
-```http
-HTTP/1.1 409 Conflict
-Content-Type: application/json
-
-{
-    "code": "integer"
-}
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-Placeholder
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-event | body | object | Optional. 
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | object | The new event created
-402 | object | Please contact our Sales to set up new event
-409 | object | An Event with same ID already exist for the target system.
-default | object | General 400/500 error
-
-
-## GET /events/{event_id}
-### Get event 
-
-```http
-GET /en/api/v2/events/{event_id} HTTP/1.1
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-{
-    "id": "string",
-    "external_ids": [
-        {
-            "id_system": "string",
-            "id": "string"
-        }
-    ],
-    "short_code": "string",
-    "name": "string",
-    "description": "string",
-    "language": "string",
-    "data_counters": {
-        "sections": "integer",
-        "people": "integer",
-        "sessions": "integer",
-        "companies": "integer",
-        "documents": "integer",
-        "maps": "integer"
-    },
-    "event_location": {
-        "location_name": "string",
-        "location_address": "string"
-    },
-    "event_dates": {
-        "start_date": "string",
-        "end_date": "string",
-        "time_zone_tz": "string",
-        "time_zone_offset": "string",
-        "time_format": "integer"
-    },
-    "event_urls": {
-        "event_app": "string",
-        "reg_app": "string",
-        "checkin_app": "string",
-        "cms_app": "string"
-    },
-    "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
-    }
-}
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | object | The event info created
-default | object | General 400/500 error
-
-## PATCH /events/{event_id}
-### Patch event 
-
-```http
-PATCH /en/api/v2/events/{event_id} HTTP/1.1
-Content-Type: application/json
-
-{
-    "event": {
-        "id": "string",
-        "external_ids": [
-            {
-                "id_system": "string",
-                "id": "string"
-            }
-        ],
-        "short_code": "string",
-        "name": "string",
-        "description": "string",
-        "language": "string",
-        "event_location": {
-            "location_name": "string",
-            "location_address": "string"
-        },
-        "event_dates": {
-            "start_date": "string",
-            "end_date": "string",
-            "time_zone_tz": "string",
-            "time_zone_offset": "string",
-            "time_format": "integer"
-        }
-    }
-}
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-{
-    "id": "string",
-    "external_ids": [
-        {
-            "id_system": "string",
-            "id": "string"
-        }
-    ],
-    "short_code": "string",
-    "name": "string",
-    "description": "string",
-    "language": "string",
-    "data_counters": {
-        "sections": "integer",
-        "people": "integer",
-        "sessions": "integer",
-        "companies": "integer",
-        "documents": "integer",
-        "maps": "integer"
-    },
-    "event_location": {
-        "location_name": "string",
-        "location_address": "string"
-    },
-    "event_dates": {
-        "start_date": "string",
-        "end_date": "string",
-        "time_zone_tz": "string",
-        "time_zone_offset": "string",
-        "time_format": "integer"
-    },
-    "event_urls": {
-        "event_app": "string",
-        "reg_app": "string",
-        "checkin_app": "string",
-        "cms_app": "string"
-    },
-    "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
-    }
-}
-```
-```http
-HTTP/1.1 403 Forbidden
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-event | body | object | Optional. 
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | object | The event info created
-403 | object | One or more fields is read-only or auto-generated. It should not set in request.
-default | object | General 400/500 error
-
-## PUT /events/{event_id}
-### Put event 
-
-```http
-PUT /en/api/v2/events/{event_id} HTTP/1.1
-Content-Type: application/json
-
-{
-    "event": {
-        "id": "string",
-        "external_ids": [
-            {
-                "id_system": "string",
-                "id": "string"
-            }
-        ],
-        "short_code": "string",
-        "name": "string",
-        "description": "string",
-        "language": "string",
-        "event_location": {
-            "location_name": "string",
-            "location_address": "string"
-        },
-        "event_dates": {
-            "start_date": "string",
-            "end_date": "string",
-            "time_zone_tz": "string",
-            "time_zone_offset": "string",
-            "time_format": "integer"
-        }
-    }
-}
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-{
-    "id": "string",
-    "external_ids": [
-        {
-            "id_system": "string",
-            "id": "string"
-        }
-    ],
-    "short_code": "string",
-    "name": "string",
-    "description": "string",
-    "language": "string",
-    "data_counters": {
-        "sections": "integer",
-        "people": "integer",
-        "sessions": "integer",
-        "companies": "integer",
-        "documents": "integer",
-        "maps": "integer"
-    },
-    "event_location": {
-        "location_name": "string",
-        "location_address": "string"
-    },
-    "event_dates": {
-        "start_date": "string",
-        "end_date": "string",
-        "time_zone_tz": "string",
-        "time_zone_offset": "string",
-        "time_format": "integer"
-    },
-    "event_urls": {
-        "event_app": "string",
-        "reg_app": "string",
-        "checkin_app": "string",
-        "cms_app": "string"
-    },
-    "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
-    }
-}
-```
-```http
-HTTP/1.1 403 Forbidden
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-event | body | object | Optional. 
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | object | The event info updated
-403 | object | One or more fields is read-only or auto-generated. It should not set in request.
-default | object | General 400/500 error
-
-
 ## GET /events/{event_id}/people
 ### Get people 
 
 ```http
 GET /en/api/v2/events/{event_id}/people HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -560,33 +29,37 @@ Content-Type: application/json
     "groups": [
         {
             "group_id": "string",
+            "external_ids": [
+                {
+                    "id_system": "string",
+                    "id": "string"
+                }
+            ],
+            "group_type": "string",
             "group_name": "string",
             "group_color": "string",
-            "group_note": "string",
-            "sub_group_ids": [
-                "string"
-            ],
             "member_number": "number",
             "timestamps": {
-                "request_timestamp": "string",
-                "creation_timestamp": "string",
-                "update_timestamp": "string"
+                "request_datetime": "string",
+                "creation_datetime": "string",
+                "update_datetime": "string"
             }
         }
     ],
     "custom_fields": [
         {
             "custom_field_id": "string",
+            "external_ids": [
+                {
+                    "id_system": "string",
+                    "id": "string"
+                }
+            ],
             "field_name": "string",
             "view_permission": "string",
             "edit_permission": "string"
         }
-    ],
-    "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
-    }
+    ]
 }
 ```
 ```http
@@ -608,8 +81,7 @@ This request will return an overview of people data statistics in specific event
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -618,11 +90,12 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/people/data
+## GET /events/{event_id}/people/resources
 ### Get person 
 
 ```http
-GET /en/api/v2/events/{event_id}/people/data HTTP/1.1
+GET /en/api/v2/events/{event_id}/people/resources HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -645,10 +118,7 @@ Content-Type: application/json
                 "first_name": "string",
                 "last_name": "string",
                 "email_address": "string",
-                "picture": "string",
-                "groups": [
-                    "string"
-                ],
+                "picture_url": "string",
                 "company": "string",
                 "title": "string",
                 "about": "string",
@@ -660,41 +130,37 @@ Content-Type: application/json
                 }
             },
             "custom_fields_meta": "object",
-            "favorite_data": {
-                "sessions": "object",
-                "companies": "object",
-                "docs": "object",
-                "notes": "object"
-            },
-            "regstration": {
-                "order_ticket_name": "string",
-                "order_paid": "string",
-                "order_transaction_id": "string",
-                "reg_email_campaign": "string",
-                "reg_utm": "string",
-                "form_meta": [
+            "groups": [
+                {
+                    "group_id": "string",
+                    "group_name": "string"
+                }
+            ],
+            "agenda": {
+                "sessions": [
                     {
-                        "question": "string",
-                        "answer": "string"
+                        "session_id": "string",
+                        "session_roles": [
+                            "string"
+                        ]
                     }
                 ]
+            },
+            "favorite_data": {
+                "sessions": [
+                    "string"
+                ],
+                "companies": "object",
+                "docs": "object"
             },
             "docs": [
                 "string"
             ],
-            "config_meta": "object",
-            "tags": "string",
-            "activities": [
-                {
-                    "product": "string",
-                    "action": "string",
-                    "timestamp": "string"
-                }
-            ],
+            "personal_settings": "object",
             "timestamps": {
-                "request_timestamp": "string",
-                "creation_timestamp": "string",
-                "update_timestamp": "string"
+                "request_datetime": "string",
+                "creation_datetime": "string",
+                "update_datetime": "string"
             }
         }
     ]
@@ -719,8 +185,10 @@ This request will return an array of people data statistics in specific events. 
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ids | query | string | Optional. filter results by specific IDs. Please use &quot;,&quot; to seperate multiple items.
+emails | query | string | Optional. filter results by specific Emails. Please use &quot;,&quot; to seperate multiple items.
+groups | query | string | Optional. filter results by specific Groups. Please use &quot;,&quot; to seperate multiple items.
 limit | query | number | Optional. Limits the number of returned results
 offset | query | number | Optional. Define the offset index of returned results
 
@@ -730,11 +198,12 @@ Http code | Type | Description
 200 | object | The array of people
 default | object | General 400/500 error
 
-## POST /events/{event_id}/people/data
+## POST /events/{event_id}/people/resources
 ### Post person 
 
 ```http
-POST /en/api/v2/events/{event_id}/people/data HTTP/1.1
+POST /en/api/v2/events/{event_id}/people/resources HTTP/1.1
+ext_id_system: string
 Content-Type: application/json
 
 {
@@ -750,10 +219,7 @@ Content-Type: application/json
             "first_name": "string",
             "last_name": "string",
             "email_address": "string",
-            "picture": "string",
-            "groups": [
-                "string"
-            ],
+            "picture_resource_id": "string",
             "company": "string",
             "title": "string",
             "about": "string",
@@ -764,19 +230,28 @@ Content-Type: application/json
                 "website_url": "string"
             }
         },
+        "custom_fields_meta": "object",
+        "assign_groups": [
+            "string"
+        ],
+        "assign_agenda": {
+            "sessions": [
+                {
+                    "session_id": "string",
+                    "session_roles": [
+                        "string"
+                    ]
+                }
+            ]
+        },
         "upload_picture": {
             "url": "string",
-            "trim": "string",
-            "rename": "string"
+            "trim": "string"
         },
-        "uplaod_docs": [
-            {
-                "url": "string",
-                "rename": "string",
-                "assign_groups": [
-                    "string"
-                ]
-            }
+        "link_docs": [
+            [
+                "string"
+            ]
         ]
     }
 }
@@ -798,10 +273,7 @@ Content-Type: application/json
         "first_name": "string",
         "last_name": "string",
         "email_address": "string",
-        "picture": "string",
-        "groups": [
-            "string"
-        ],
+        "picture_url": "string",
         "company": "string",
         "title": "string",
         "about": "string",
@@ -813,41 +285,37 @@ Content-Type: application/json
         }
     },
     "custom_fields_meta": "object",
-    "favorite_data": {
-        "sessions": "object",
-        "companies": "object",
-        "docs": "object",
-        "notes": "object"
-    },
-    "regstration": {
-        "order_ticket_name": "string",
-        "order_paid": "string",
-        "order_transaction_id": "string",
-        "reg_email_campaign": "string",
-        "reg_utm": "string",
-        "form_meta": [
+    "groups": [
+        {
+            "group_id": "string",
+            "group_name": "string"
+        }
+    ],
+    "agenda": {
+        "sessions": [
             {
-                "question": "string",
-                "answer": "string"
+                "session_id": "string",
+                "session_roles": [
+                    "string"
+                ]
             }
         ]
+    },
+    "favorite_data": {
+        "sessions": [
+            "string"
+        ],
+        "companies": "object",
+        "docs": "object"
     },
     "docs": [
         "string"
     ],
-    "config_meta": "object",
-    "tags": "string",
-    "activities": [
-        {
-            "product": "string",
-            "action": "string",
-            "timestamp": "string"
-        }
-    ],
+    "personal_settings": "object",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -870,8 +338,7 @@ Add new person in the event
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 person | body | object | Optional. 
 
 ### Responses
@@ -881,11 +348,12 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/people/data/{person_id}
+## GET /events/{event_id}/people/resources/{person_id}
 ### Get person_id 
 
 ```http
-GET /en/api/v2/events/{event_id}/people/data/{person_id} HTTP/1.1
+GET /en/api/v2/events/{event_id}/people/resources/{person_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -904,10 +372,7 @@ Content-Type: application/json
         "first_name": "string",
         "last_name": "string",
         "email_address": "string",
-        "picture": "string",
-        "groups": [
-            "string"
-        ],
+        "picture_url": "string",
         "company": "string",
         "title": "string",
         "about": "string",
@@ -919,41 +384,37 @@ Content-Type: application/json
         }
     },
     "custom_fields_meta": "object",
-    "favorite_data": {
-        "sessions": "object",
-        "companies": "object",
-        "docs": "object",
-        "notes": "object"
-    },
-    "regstration": {
-        "order_ticket_name": "string",
-        "order_paid": "string",
-        "order_transaction_id": "string",
-        "reg_email_campaign": "string",
-        "reg_utm": "string",
-        "form_meta": [
+    "groups": [
+        {
+            "group_id": "string",
+            "group_name": "string"
+        }
+    ],
+    "agenda": {
+        "sessions": [
             {
-                "question": "string",
-                "answer": "string"
+                "session_id": "string",
+                "session_roles": [
+                    "string"
+                ]
             }
         ]
+    },
+    "favorite_data": {
+        "sessions": [
+            "string"
+        ],
+        "companies": "object",
+        "docs": "object"
     },
     "docs": [
         "string"
     ],
-    "config_meta": "object",
-    "tags": "string",
-    "activities": [
-        {
-            "product": "string",
-            "action": "string",
-            "timestamp": "string"
-        }
-    ],
+    "personal_settings": "object",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -977,8 +438,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -986,11 +446,12 @@ Http code | Type | Description
 200 | object | The single person record
 default | object | General 400/500 error
 
-## PATCH /events/{event_id}/people/data/{person_id}
+## PATCH /events/{event_id}/people/resources/{person_id}
 ### Patch person_id 
 
 ```http
-PATCH /en/api/v2/events/{event_id}/people/data/{person_id} HTTP/1.1
+PATCH /en/api/v2/events/{event_id}/people/resources/{person_id} HTTP/1.1
+ext_id_system: string
 Content-Type: application/json
 
 {
@@ -1006,10 +467,7 @@ Content-Type: application/json
             "first_name": "string",
             "last_name": "string",
             "email_address": "string",
-            "picture": "string",
-            "groups": [
-                "string"
-            ],
+            "picture_resource_id": "string",
             "company": "string",
             "title": "string",
             "about": "string",
@@ -1020,19 +478,28 @@ Content-Type: application/json
                 "website_url": "string"
             }
         },
+        "custom_fields_meta": "object",
+        "assign_groups": [
+            "string"
+        ],
+        "assign_agenda": {
+            "sessions": [
+                {
+                    "session_id": "string",
+                    "session_roles": [
+                        "string"
+                    ]
+                }
+            ]
+        },
         "upload_picture": {
             "url": "string",
-            "trim": "string",
-            "rename": "string"
+            "trim": "string"
         },
-        "uplaod_docs": [
-            {
-                "url": "string",
-                "rename": "string",
-                "assign_groups": [
-                    "string"
-                ]
-            }
+        "link_docs": [
+            [
+                "string"
+            ]
         ]
     }
 }
@@ -1054,10 +521,7 @@ Content-Type: application/json
         "first_name": "string",
         "last_name": "string",
         "email_address": "string",
-        "picture": "string",
-        "groups": [
-            "string"
-        ],
+        "picture_url": "string",
         "company": "string",
         "title": "string",
         "about": "string",
@@ -1069,41 +533,37 @@ Content-Type: application/json
         }
     },
     "custom_fields_meta": "object",
-    "favorite_data": {
-        "sessions": "object",
-        "companies": "object",
-        "docs": "object",
-        "notes": "object"
-    },
-    "regstration": {
-        "order_ticket_name": "string",
-        "order_paid": "string",
-        "order_transaction_id": "string",
-        "reg_email_campaign": "string",
-        "reg_utm": "string",
-        "form_meta": [
+    "groups": [
+        {
+            "group_id": "string",
+            "group_name": "string"
+        }
+    ],
+    "agenda": {
+        "sessions": [
             {
-                "question": "string",
-                "answer": "string"
+                "session_id": "string",
+                "session_roles": [
+                    "string"
+                ]
             }
         ]
+    },
+    "favorite_data": {
+        "sessions": [
+            "string"
+        ],
+        "companies": "object",
+        "docs": "object"
     },
     "docs": [
         "string"
     ],
-    "config_meta": "object",
-    "tags": "string",
-    "activities": [
-        {
-            "product": "string",
-            "action": "string",
-            "timestamp": "string"
-        }
-    ],
+    "personal_settings": "object",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -1127,8 +587,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 person | body | object | Optional. 
 
 ### Responses
@@ -1137,11 +596,12 @@ Http code | Type | Description
 200 | object | The person record updated
 default | object | General 400/500 error
 
-## PUT /events/{event_id}/people/data/{person_id}
+## PUT /events/{event_id}/people/resources/{person_id}
 ### Put person_id 
 
 ```http
-PUT /en/api/v2/events/{event_id}/people/data/{person_id} HTTP/1.1
+PUT /en/api/v2/events/{event_id}/people/resources/{person_id} HTTP/1.1
+ext_id_system: string
 Content-Type: application/json
 
 {
@@ -1157,10 +617,7 @@ Content-Type: application/json
             "first_name": "string",
             "last_name": "string",
             "email_address": "string",
-            "picture": "string",
-            "groups": [
-                "string"
-            ],
+            "picture_resource_id": "string",
             "company": "string",
             "title": "string",
             "about": "string",
@@ -1171,19 +628,28 @@ Content-Type: application/json
                 "website_url": "string"
             }
         },
+        "custom_fields_meta": "object",
+        "assign_groups": [
+            "string"
+        ],
+        "assign_agenda": {
+            "sessions": [
+                {
+                    "session_id": "string",
+                    "session_roles": [
+                        "string"
+                    ]
+                }
+            ]
+        },
         "upload_picture": {
             "url": "string",
-            "trim": "string",
-            "rename": "string"
+            "trim": "string"
         },
-        "uplaod_docs": [
-            {
-                "url": "string",
-                "rename": "string",
-                "assign_groups": [
-                    "string"
-                ]
-            }
+        "link_docs": [
+            [
+                "string"
+            ]
         ]
     }
 }
@@ -1205,10 +671,7 @@ Content-Type: application/json
         "first_name": "string",
         "last_name": "string",
         "email_address": "string",
-        "picture": "string",
-        "groups": [
-            "string"
-        ],
+        "picture_url": "string",
         "company": "string",
         "title": "string",
         "about": "string",
@@ -1220,41 +683,37 @@ Content-Type: application/json
         }
     },
     "custom_fields_meta": "object",
-    "favorite_data": {
-        "sessions": "object",
-        "companies": "object",
-        "docs": "object",
-        "notes": "object"
-    },
-    "regstration": {
-        "order_ticket_name": "string",
-        "order_paid": "string",
-        "order_transaction_id": "string",
-        "reg_email_campaign": "string",
-        "reg_utm": "string",
-        "form_meta": [
+    "groups": [
+        {
+            "group_id": "string",
+            "group_name": "string"
+        }
+    ],
+    "agenda": {
+        "sessions": [
             {
-                "question": "string",
-                "answer": "string"
+                "session_id": "string",
+                "session_roles": [
+                    "string"
+                ]
             }
         ]
+    },
+    "favorite_data": {
+        "sessions": [
+            "string"
+        ],
+        "companies": "object",
+        "docs": "object"
     },
     "docs": [
         "string"
     ],
-    "config_meta": "object",
-    "tags": "string",
-    "activities": [
-        {
-            "product": "string",
-            "action": "string",
-            "timestamp": "string"
-        }
-    ],
+    "personal_settings": "object",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -1278,8 +737,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 person | body | object | Optional. 
 
 ### Responses
@@ -1288,11 +746,12 @@ Http code | Type | Description
 200 | object | The person record updated
 default | object | General 400/500 error
 
-## DELETE /events/{event_id}/people/data/{person_id}
+## DELETE /events/{event_id}/people/resources/{person_id}
 ### Delete person_id 
 
 ```http
-DELETE /en/api/v2/events/{event_id}/people/data/{person_id} HTTP/1.1
+DELETE /en/api/v2/events/{event_id}/people/resources/{person_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -1311,10 +770,7 @@ Content-Type: application/json
         "first_name": "string",
         "last_name": "string",
         "email_address": "string",
-        "picture": "string",
-        "groups": [
-            "string"
-        ],
+        "picture_url": "string",
         "company": "string",
         "title": "string",
         "about": "string",
@@ -1326,41 +782,37 @@ Content-Type: application/json
         }
     },
     "custom_fields_meta": "object",
-    "favorite_data": {
-        "sessions": "object",
-        "companies": "object",
-        "docs": "object",
-        "notes": "object"
-    },
-    "regstration": {
-        "order_ticket_name": "string",
-        "order_paid": "string",
-        "order_transaction_id": "string",
-        "reg_email_campaign": "string",
-        "reg_utm": "string",
-        "form_meta": [
+    "groups": [
+        {
+            "group_id": "string",
+            "group_name": "string"
+        }
+    ],
+    "agenda": {
+        "sessions": [
             {
-                "question": "string",
-                "answer": "string"
+                "session_id": "string",
+                "session_roles": [
+                    "string"
+                ]
             }
         ]
+    },
+    "favorite_data": {
+        "sessions": [
+            "string"
+        ],
+        "companies": "object",
+        "docs": "object"
     },
     "docs": [
         "string"
     ],
-    "config_meta": "object",
-    "tags": "string",
-    "activities": [
-        {
-            "product": "string",
-            "action": "string",
-            "timestamp": "string"
-        }
-    ],
+    "personal_settings": "object",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -1384,8 +836,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -1394,11 +845,12 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/people/data/{person_id}/groups
+## GET /events/{event_id}/people/resources/{person_id}/groups
 ### Retrieve the groups specific person belongs to 
 
 ```http
-GET /en/api/v2/events/{event_id}/people/data/{person_id}/groups HTTP/1.1
+GET /en/api/v2/events/{event_id}/people/resources/{person_id}/groups HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -1432,8 +884,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -1442,11 +893,12 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## POST /events/{event_id}/people/data/{person_id}/groups/{group_id}
+## POST /events/{event_id}/people/resources/{person_id}/groups/{group_id}
 ### Add person to a group 
 
 ```http
-POST /en/api/v2/events/{event_id}/people/data/{person_id}/groups/{group_id} HTTP/1.1
+POST /en/api/v2/events/{event_id}/people/resources/{person_id}/groups/{group_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -1491,8 +943,8 @@ Name | In | Type | Description
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
 group_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the group ID.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+groups | query | string | Optional. filter results by specific Groups. Please use &quot;,&quot; to seperate multiple items.
 
 ### Responses
 Http code | Type | Description
@@ -1501,11 +953,12 @@ Http code | Type | Description
 409 | object | The person already belongs to the group.
 default | object | General 400/500 error
 
-## DELETE /events/{event_id}/people/data/{person_id}/groups/{group_id}
+## DELETE /events/{event_id}/people/resources/{person_id}/groups/{group_id}
 ### Delete person from group 
 
 ```http
-DELETE /en/api/v2/events/{event_id}/people/data/{person_id}/groups/{group_id} HTTP/1.1
+DELETE /en/api/v2/events/{event_id}/people/resources/{person_id}/groups/{group_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -1550,8 +1003,7 @@ Name | In | Type | Description
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
 group_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the group ID.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -1561,18 +1013,28 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/people/data/{person_id}/sessions
+## GET /events/{event_id}/people/resources/{person_id}/sessions
 ### Retrieve the sessions that this person will attend as attendee 
 
 ```http
-GET /en/api/v2/events/{event_id}/people/data/{person_id}/sessions HTTP/1.1
+GET /en/api/v2/events/{event_id}/people/resources/{person_id}/sessions HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-"object"
+{
+    "sessions": [
+        {
+            "session_id": "string",
+            "session_roles": [
+                "string"
+            ]
+        }
+    ]
+}
 ```
 ```http
 HTTP/1.1 [default] 
@@ -1594,8 +1056,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -1603,19 +1064,44 @@ Http code | Type | Description
 200 | object | List of sessions
 default | object | General 400/500 error
 
-
-## POST /events/{event_id}/people/data/{person_id}/sessions/{session_id}
+## POST /events/{event_id}/people/resources/{person_id}/sessions
 ### Add a session to specifc person (as attendee) 
 
 ```http
-POST /en/api/v2/events/{event_id}/people/data/{person_id}/sessions/{session_id} HTTP/1.1
+POST /en/api/v2/events/{event_id}/people/resources/{person_id}/sessions HTTP/1.1
+ext_id_system: string
+Content-Type: application/json
+
+{
+    "session": {
+        "sessions": [
+            {
+                "session_id": "string",
+                "session_roles": [
+                    "string"
+                ]
+            }
+        ]
+    }
+}
 ```
 	
 ```http
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-"object"
+[
+    {
+        "sessions": [
+            {
+                "session_id": "string",
+                "session_roles": [
+                    "string"
+                ]
+            }
+        ]
+    }
+]
 ```
 ```http
 HTTP/1.1 409 Conflict
@@ -1647,29 +1133,41 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
-session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+session | body | object | Optional. 
 
 ### Responses
 Http code | Type | Description
 --- | --- | ---
-200 | object | The sessions person (as attendee) belongs to
+200 | array[object] | The sessions person (as attendee) belongs to
 409 | object | The person already has this session.
 default | object | General 400/500 error
 
-## DELETE /events/{event_id}/people/data/{person_id}/sessions/{session_id}
+
+## DELETE /events/{event_id}/people/resources/{person_id}/sessions/{session_id}
 ### Delete person from session attendee list 
 
 ```http
-DELETE /en/api/v2/events/{event_id}/people/data/{person_id}/sessions/{session_id} HTTP/1.1
+DELETE /en/api/v2/events/{event_id}/people/resources/{person_id}/sessions/{session_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-"object"
+[
+    {
+        "sessions": [
+            {
+                "session_id": "string",
+                "session_roles": [
+                    "string"
+                ]
+            }
+        ]
+    }
+]
 ```
 ```http
 HTTP/1.1 404 Not Found
@@ -1702,13 +1200,12 @@ Name | In | Type | Description
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
 session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
 --- | --- | ---
-200 | object | The sessions person (as attendee) belongs to
+200 | array[object] | The sessions person (as attendee) belongs to
 404 | object | The person doesn&#039;t belong to the attendee list.
 default | object | General 400/500 error
 
@@ -1718,6 +1215,7 @@ default | object | General 400/500 error
 
 ```http
 GET /en/api/v2/events/{event_id}/people/groups HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -1727,17 +1225,20 @@ Content-Type: application/json
 [
     {
         "group_id": "string",
+        "external_ids": [
+            {
+                "id_system": "string",
+                "id": "string"
+            }
+        ],
+        "group_type": "string",
         "group_name": "string",
         "group_color": "string",
-        "group_note": "string",
-        "sub_group_ids": [
-            "string"
-        ],
         "member_number": "number",
         "timestamps": {
-            "request_timestamp": "string",
-            "creation_timestamp": "string",
-            "update_timestamp": "string"
+            "request_datetime": "string",
+            "creation_datetime": "string",
+            "update_datetime": "string"
         }
     }
 ]
@@ -1761,8 +1262,7 @@ This request will return an array of people group details.
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -1775,6 +1275,7 @@ default | object | General 400/500 error
 
 ```http
 POST /en/api/v2/events/{event_id}/people/groups HTTP/1.1
+ext_id_system: string
 Content-Type: application/json
 
 {
@@ -1798,17 +1299,20 @@ Content-Type: application/json
 
 {
     "group_id": "string",
+    "external_ids": [
+        {
+            "id_system": "string",
+            "id": "string"
+        }
+    ],
+    "group_type": "string",
     "group_name": "string",
     "group_color": "string",
-    "group_note": "string",
-    "sub_group_ids": [
-        "string"
-    ],
     "member_number": "number",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -1831,8 +1335,7 @@ Placeholder
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 group | body | object | Optional. 
 
 ### Responses
@@ -1847,6 +1350,7 @@ default | object | General 400/500 error
 
 ```http
 GET /en/api/v2/events/{event_id}/people/groups/{group_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -1855,17 +1359,20 @@ Content-Type: application/json
 
 {
     "group_id": "string",
+    "external_ids": [
+        {
+            "id_system": "string",
+            "id": "string"
+        }
+    ],
+    "group_type": "string",
     "group_name": "string",
     "group_color": "string",
-    "group_note": "string",
-    "sub_group_ids": [
-        "string"
-    ],
     "member_number": "number",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -1888,9 +1395,8 @@ This request will return the detail of specific people group.
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 group_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the group ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -1903,6 +1409,7 @@ default | object | General 400/500 error
 
 ```http
 DELETE /en/api/v2/events/{event_id}/people/groups/{group_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -1930,9 +1437,8 @@ This will delete the People Group and remove all members from this group.
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 group_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the group ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -1946,6 +1452,7 @@ default | object | General 400/500 error
 
 ```http
 GET /en/api/v2/events/{event_id}/people/groups/{group_id}/members HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -1965,9 +1472,9 @@ Content-Type: application/json
         "last_name": "string",
         "email_address": "string",
         "timestamps": {
-            "request_timestamp": "string",
-            "creation_timestamp": "string",
-            "update_timestamp": "string"
+            "request_datetime": "string",
+            "creation_datetime": "string",
+            "update_datetime": "string"
         }
     }
 ]
@@ -1991,9 +1498,8 @@ This request will return basic info of people in the group. This will only inclu
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 group_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the group ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -2007,6 +1513,7 @@ default | object | General 400/500 error
 
 ```http
 GET /en/api/v2/events/{event_id}/people/custom_fields HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -2016,6 +1523,12 @@ Content-Type: application/json
 [
     {
         "custom_field_id": "string",
+        "external_ids": [
+            {
+                "id_system": "string",
+                "id": "string"
+            }
+        ],
         "field_name": "string",
         "view_permission": "string",
         "edit_permission": "string"
@@ -2041,237 +1554,12 @@ This request will return an array of people custom fields.
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
 --- | --- | ---
 200 | array[object] | The array of custom fields defined in People
-default | object | General 400/500 error
-
-## POST /events/{event_id}/people/custom_fields
-### Create new people custom field 
-
-```http
-POST /en/api/v2/events/{event_id}/people/custom_fields HTTP/1.1
-Content-Type: application/json
-
-{
-    "field": {
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-}
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-{
-    "custom_field_id": "string",
-    "field_name": "string",
-    "view_permission": "string",
-    "edit_permission": "string"
-}
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-This request will use the field definition in body to create new custom field for People.
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field | body | object | Optional. 
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | object | The custom field created
-default | object | General 400/500 error
-
-
-## PUT /events/{event_id}/people/custom_fields/{field_id}
-### Overwrite custom fields definition 
-
-```http
-PUT /en/api/v2/events/{event_id}/people/custom_fields/{field_id} HTTP/1.1
-Content-Type: application/json
-
-{
-    "field": {
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-}
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-[
-    {
-        "custom_field_id": "string",
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-]
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-This request will overwrite the definition of specific customer field. 
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the custome field ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field | body | object | Optional. 
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | array[object] | The new definition of custom field
-default | object | General 400/500 error
-
-## PATCH /events/{event_id}/people/custom_fields/{field_id}
-### Update custom fields definition 
-
-```http
-PATCH /en/api/v2/events/{event_id}/people/custom_fields/{field_id} HTTP/1.1
-Content-Type: application/json
-
-{
-    "field": {
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-}
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-[
-    {
-        "custom_field_id": "string",
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-]
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-This request will update the definition of specific customer field. 
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the custome field ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field | body | object | Optional. 
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | array[object] | The new definition of custom field
-default | object | General 400/500 error
-
-## DELETE /events/{event_id}/people/custom_fields/{field_id}
-### Delete custom fields definition 
-
-```http
-DELETE /en/api/v2/events/{event_id}/people/custom_fields/{field_id} HTTP/1.1
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-[
-    {
-        "custom_field_id": "string",
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-]
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-This request will delete the definition of specific customer field. All values of this custome field saved in people records will be deleted.
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the custome field ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | array[object] | The rest of custome fields available in People
 default | object | General 400/500 error
 
 
@@ -2280,6 +1568,7 @@ default | object | General 400/500 error
 
 ```http
 GET /en/api/v2/events/{event_id}/sessions HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -2289,46 +1578,38 @@ Content-Type: application/json
 {
     "session_number": "integer",
     "track_number": "integer",
-    "custom_field_number": "integer",
     "session_role_number": "integer",
     "tracks": [
         {
             "group_id": "string",
+            "external_ids": [
+                {
+                    "id_system": "string",
+                    "id": "string"
+                }
+            ],
+            "group_type": "string",
             "group_name": "string",
             "group_color": "string",
-            "group_note": "string",
-            "sub_group_ids": [
-                "string"
-            ],
             "member_number": "number",
             "timestamps": {
-                "request_timestamp": "string",
-                "creation_timestamp": "string",
-                "update_timestamp": "string"
+                "request_datetime": "string",
+                "creation_datetime": "string",
+                "update_datetime": "string"
             }
         }
     ],
-    "custom_fields": [
-        {
-            "custom_field_id": "string",
-            "field_name": "string",
-            "view_permission": "string",
-            "edit_permission": "string"
-        }
-    ],
     "sessions_roles": [
-        {
-            "custom_field_id": "string",
-            "field_name": "string",
-            "view_permission": "string",
-            "edit_permission": "string"
-        }
-    ],
-    "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
-    }
+        [
+            {
+                "session_role_id": "string",
+                "session_role_name": "string",
+                "people_list": [
+                    "string"
+                ]
+            }
+        ]
+    ]
 }
 ```
 ```http
@@ -2350,8 +1631,7 @@ This request will return an overview of event schedule, session and track info.
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -2360,11 +1640,12 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/sessions/data
+## GET /events/{event_id}/sessions/resources
 ### Get person 
 
 ```http
-GET /en/api/v2/events/{event_id}/sessions/data HTTP/1.1
+GET /en/api/v2/events/{event_id}/sessions/resources HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -2402,16 +1683,17 @@ Content-Type: application/json
             ],
             "session_roles": [
                 {
-                    "role_name": "string",
+                    "session_role_id": "string",
+                    "session_role_name": "string",
                     "people_list": [
                         "string"
                     ]
                 }
             ],
             "timestamps": {
-                "request_timestamp": "string",
-                "creation_timestamp": "string",
-                "update_timestamp": "string"
+                "request_datetime": "string",
+                "creation_datetime": "string",
+                "update_datetime": "string"
             }
         }
     ]
@@ -2436,8 +1718,8 @@ This request will return an array of sessions data statistics in specific events
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ids | query | string | Optional. filter results by specific IDs. Please use &quot;,&quot; to seperate multiple items.
 limit | query | number | Optional. Limits the number of returned results
 offset | query | number | Optional. Define the offset index of returned results
 
@@ -2447,11 +1729,12 @@ Http code | Type | Description
 200 | object | The array of sessions.
 default | object | General 400/500 error
 
-## POST /events/{event_id}/sessions/data
+## POST /events/{event_id}/sessions/resources
 ### Post session 
 
 ```http
-POST /en/api/v2/events/{event_id}/sessions/data HTTP/1.1
+POST /en/api/v2/events/{event_id}/sessions/resources HTTP/1.1
+ext_id_system: string
 Content-Type: application/json
 
 {
@@ -2485,7 +1768,8 @@ Content-Type: application/json
         ],
         "session_roles": [
             {
-                "role_name": "string",
+                "session_role_id": "string",
+                "session_role_name": "string",
                 "people_list": [
                     "string"
                 ]
@@ -2526,16 +1810,17 @@ Content-Type: application/json
     ],
     "session_roles": [
         {
-            "role_name": "string",
+            "session_role_id": "string",
+            "session_role_name": "string",
             "people_list": [
                 "string"
             ]
         }
     ],
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -2558,8 +1843,7 @@ Defining a new session
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 session | body | object | Optional. 
 
 ### Responses
@@ -2569,11 +1853,12 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/sessions/data/{session_id}
+## GET /events/{event_id}/sessions/resources/{session_id}
 ### Get session_id 
 
 ```http
-GET /en/api/v2/events/{event_id}/sessions/data/{session_id} HTTP/1.1
+GET /en/api/v2/events/{event_id}/sessions/resources/{session_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -2607,16 +1892,17 @@ Content-Type: application/json
     ],
     "session_roles": [
         {
-            "role_name": "string",
+            "session_role_id": "string",
+            "session_role_name": "string",
             "people_list": [
                 "string"
             ]
         }
     ],
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -2640,8 +1926,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -2649,11 +1934,12 @@ Http code | Type | Description
 200 | object | The single session record
 default | object | General 400/500 error
 
-## PATCH /events/{event_id}/sessions/data/{session_id}
+## PATCH /events/{event_id}/sessions/resources/{session_id}
 ### Patch session_id 
 
 ```http
-PATCH /en/api/v2/events/{event_id}/sessions/data/{session_id} HTTP/1.1
+PATCH /en/api/v2/events/{event_id}/sessions/resources/{session_id} HTTP/1.1
+ext_id_system: string
 Content-Type: application/json
 
 {
@@ -2687,7 +1973,8 @@ Content-Type: application/json
         ],
         "session_roles": [
             {
-                "role_name": "string",
+                "session_role_id": "string",
+                "session_role_name": "string",
                 "people_list": [
                     "string"
                 ]
@@ -2728,16 +2015,17 @@ Content-Type: application/json
     ],
     "session_roles": [
         {
-            "role_name": "string",
+            "session_role_id": "string",
+            "session_role_name": "string",
             "people_list": [
                 "string"
             ]
         }
     ],
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -2761,8 +2049,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 session | body | object | Optional. 
 
 ### Responses
@@ -2771,11 +2058,12 @@ Http code | Type | Description
 200 | object | The session record updated
 default | object | General 400/500 error
 
-## PUT /events/{event_id}/sessions/data/{session_id}
+## PUT /events/{event_id}/sessions/resources/{session_id}
 ### Put session_id 
 
 ```http
-PUT /en/api/v2/events/{event_id}/sessions/data/{session_id} HTTP/1.1
+PUT /en/api/v2/events/{event_id}/sessions/resources/{session_id} HTTP/1.1
+ext_id_system: string
 Content-Type: application/json
 
 {
@@ -2809,7 +2097,8 @@ Content-Type: application/json
         ],
         "session_roles": [
             {
-                "role_name": "string",
+                "session_role_id": "string",
+                "session_role_name": "string",
                 "people_list": [
                     "string"
                 ]
@@ -2850,16 +2139,17 @@ Content-Type: application/json
     ],
     "session_roles": [
         {
-            "role_name": "string",
+            "session_role_id": "string",
+            "session_role_name": "string",
             "people_list": [
                 "string"
             ]
         }
     ],
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -2883,8 +2173,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 session | body | object | Optional. 
 
 ### Responses
@@ -2893,11 +2182,12 @@ Http code | Type | Description
 200 | object | The session record updated
 default | object | General 400/500 error
 
-## DELETE /events/{event_id}/sessions/data/{session_id}
+## DELETE /events/{event_id}/sessions/resources/{session_id}
 ### Delete session_id 
 
 ```http
-DELETE /en/api/v2/events/{event_id}/sessions/data/{session_id} HTTP/1.1
+DELETE /en/api/v2/events/{event_id}/sessions/resources/{session_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -2931,16 +2221,17 @@ Content-Type: application/json
     ],
     "session_roles": [
         {
-            "role_name": "string",
+            "session_role_id": "string",
+            "session_role_name": "string",
             "people_list": [
                 "string"
             ]
         }
     ],
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -2964,8 +2255,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -2974,11 +2264,12 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/sessions/data/{session_id}/attendees
+## GET /events/{event_id}/sessions/resources/{session_id}/attendees
 ### Retrieve the attendees of specific session 
 
 ```http
-GET /en/api/v2/events/{event_id}/sessions/data/{session_id}/attendees HTTP/1.1
+GET /en/api/v2/events/{event_id}/sessions/resources/{session_id}/attendees HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -3007,8 +2298,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -3017,11 +2307,12 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## POST /events/{event_id}/sessions/data/{session_id}/attendees/{person_id}
+## POST /events/{event_id}/sessions/resources/{session_id}/attendees/{person_id}
 ### Add an attendee to specifc session 
 
 ```http
-POST /en/api/v2/events/{event_id}/sessions/data/{session_id}/attendees/{person_id} HTTP/1.1
+POST /en/api/v2/events/{event_id}/sessions/resources/{session_id}/attendees/{person_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -3061,8 +2352,7 @@ Name | In | Type | Description
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
 session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -3071,11 +2361,12 @@ Http code | Type | Description
 409 | object | The attendee people is already in the session.
 default | object | General 400/500 error
 
-## DELETE /events/{event_id}/sessions/data/{session_id}/attendees/{person_id}
+## DELETE /events/{event_id}/sessions/resources/{session_id}/attendees/{person_id}
 ### Delete person from session attendee list 
 
 ```http
-DELETE /en/api/v2/events/{event_id}/sessions/data/{session_id}/attendees/{person_id} HTTP/1.1
+DELETE /en/api/v2/events/{event_id}/sessions/resources/{session_id}/attendees/{person_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -3112,8 +2403,7 @@ Name | In | Type | Description
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
 session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -3128,6 +2418,7 @@ default | object | General 400/500 error
 
 ```http
 GET /en/api/v2/events/{event_id}/sessions/tracks HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -3136,18 +2427,20 @@ Content-Type: application/json
 
 [
     {
-        "group_id": "string",
-        "group_name": "string",
-        "group_color": "string",
-        "group_note": "string",
-        "sub_group_ids": [
-            "string"
+        "track_id": "string",
+        "external_ids": [
+            {
+                "id_system": "string",
+                "id": "string"
+            }
         ],
-        "member_number": "number",
+        "track_name": "string",
+        "track_color": "string",
+        "track_session_number": "number",
         "timestamps": {
-            "request_timestamp": "string",
-            "creation_timestamp": "string",
-            "update_timestamp": "string"
+            "request_datetime": "string",
+            "creation_datetime": "string",
+            "update_datetime": "string"
         }
     }
 ]
@@ -3171,8 +2464,7 @@ This request will return an array of session track details.
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -3185,6 +2477,7 @@ default | object | General 400/500 error
 
 ```http
 POST /en/api/v2/events/{event_id}/sessions/tracks HTTP/1.1
+ext_id_system: string
 Content-Type: application/json
 
 {
@@ -3197,18 +2490,20 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-    "group_id": "string",
-    "group_name": "string",
-    "group_color": "string",
-    "group_note": "string",
-    "sub_group_ids": [
-        "string"
+    "track_id": "string",
+    "external_ids": [
+        {
+            "id_system": "string",
+            "id": "string"
+        }
     ],
-    "member_number": "number",
+    "track_name": "string",
+    "track_color": "string",
+    "track_session_number": "number",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -3231,8 +2526,7 @@ Placeholder
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 track | body | object | Optional. 
 
 ### Responses
@@ -3242,11 +2536,12 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/sessions/tracks/{group_id}
+## GET /events/{event_id}/sessions/tracks/{track_id}
 ### Get specifc session track info 
 
 ```http
-GET /en/api/v2/events/{event_id}/sessions/tracks/{group_id} HTTP/1.1
+GET /en/api/v2/events/{event_id}/sessions/tracks/{track_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -3254,18 +2549,20 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-    "group_id": "string",
-    "group_name": "string",
-    "group_color": "string",
-    "group_note": "string",
-    "sub_group_ids": [
-        "string"
+    "track_id": "string",
+    "external_ids": [
+        {
+            "id_system": "string",
+            "id": "string"
+        }
     ],
-    "member_number": "number",
+    "track_name": "string",
+    "track_color": "string",
+    "track_session_number": "number",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -3288,9 +2585,8 @@ This request will return the detail of specific session track.
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-group_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the group ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+track_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the track ID.
 
 ### Responses
 Http code | Type | Description
@@ -3298,11 +2594,12 @@ Http code | Type | Description
 200 | object | The Session Track definition
 default | object | General 400/500 error
 
-## DELETE /events/{event_id}/sessions/tracks/{group_id}
+## DELETE /events/{event_id}/sessions/tracks/{track_id}
 ### Delete session track 
 
 ```http
-DELETE /en/api/v2/events/{event_id}/sessions/tracks/{group_id} HTTP/1.1
+DELETE /en/api/v2/events/{event_id}/sessions/tracks/{track_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -3330,9 +2627,8 @@ This will delete the Session Track and remove all sessions from this track.
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-group_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the group ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+track_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the track ID.
 
 ### Responses
 Http code | Type | Description
@@ -3341,11 +2637,12 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/sessions/tracks/{group_id}/list
+## GET /events/{event_id}/sessions/tracks/{track_id}/list
 ### Get all sessions in the track 
 
 ```http
-GET /en/api/v2/events/{event_id}/sessions/tracks/{group_id}/list HTTP/1.1
+GET /en/api/v2/events/{event_id}/sessions/tracks/{track_id}/list HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -3373,9 +2670,8 @@ This request will return basic info of sessions in the track.
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-group_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the group ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+track_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the track ID.
 
 ### Responses
 Http code | Type | Description
@@ -3389,6 +2685,7 @@ default | object | General 400/500 error
 
 ```http
 GET /en/api/v2/events/{event_id}/sessions/custom_fields HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -3398,6 +2695,12 @@ Content-Type: application/json
 [
     {
         "custom_field_id": "string",
+        "external_ids": [
+            {
+                "id_system": "string",
+                "id": "string"
+            }
+        ],
         "field_name": "string",
         "view_permission": "string",
         "edit_permission": "string"
@@ -3423,237 +2726,12 @@ This request will return an array of people custom fields.
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
 --- | --- | ---
 200 | array[object] | The array of custom fields defined in People
-default | object | General 400/500 error
-
-## POST /events/{event_id}/sessions/custom_fields
-### Create new people custom field 
-
-```http
-POST /en/api/v2/events/{event_id}/sessions/custom_fields HTTP/1.1
-Content-Type: application/json
-
-{
-    "field": {
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-}
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-{
-    "custom_field_id": "string",
-    "field_name": "string",
-    "view_permission": "string",
-    "edit_permission": "string"
-}
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-This request will use the field definition in body to create new custom field for People.
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field | body | object | Optional. 
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | object | The custom field created
-default | object | General 400/500 error
-
-
-## PUT /events/{event_id}/sessions/custom_fields/{field_id}
-### Overwrite custom fields definition 
-
-```http
-PUT /en/api/v2/events/{event_id}/sessions/custom_fields/{field_id} HTTP/1.1
-Content-Type: application/json
-
-{
-    "field": {
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-}
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-[
-    {
-        "custom_field_id": "string",
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-]
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-This request will overwrite the definition of specific customer field. 
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the custome field ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field | body | object | Optional. 
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | array[object] | The new definition of custom field
-default | object | General 400/500 error
-
-## PATCH /events/{event_id}/sessions/custom_fields/{field_id}
-### Update custom fields definition 
-
-```http
-PATCH /en/api/v2/events/{event_id}/sessions/custom_fields/{field_id} HTTP/1.1
-Content-Type: application/json
-
-{
-    "field": {
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-}
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-[
-    {
-        "custom_field_id": "string",
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-]
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-This request will update the definition of specific customer field. 
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the custome field ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field | body | object | Optional. 
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | array[object] | The new definition of custom field
-default | object | General 400/500 error
-
-## DELETE /events/{event_id}/sessions/custom_fields/{field_id}
-### Delete custom fields definition 
-
-```http
-DELETE /en/api/v2/events/{event_id}/sessions/custom_fields/{field_id} HTTP/1.1
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-[
-    {
-        "custom_field_id": "string",
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-]
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-This request will delete the definition of specific customer field. All values of this custome field saved in people records will be deleted.
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-field_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the custome field ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | array[object] | The rest of custome fields available in Sessions
 default | object | General 400/500 error
 
 
@@ -3662,6 +2740,7 @@ default | object | General 400/500 error
 
 ```http
 GET /en/api/v2/event/{event_id}/resources/pictures HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -3677,9 +2756,9 @@ Content-Type: application/json
         "upload_filename": "string",
         "upload_request": "string",
         "timestamps": {
-            "request_timestamp": "string",
-            "creation_timestamp": "string",
-            "update_timestamp": "string"
+            "request_datetime": "string",
+            "creation_datetime": "string",
+            "update_datetime": "string"
         }
     }
 ]
@@ -3703,8 +2782,7 @@ Placeholder
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -3717,6 +2795,7 @@ default | object | General 400/500 error
 
 ```http
 POST /en/api/v2/event/{event_id}/resources/pictures HTTP/1.1
+ext_id_system: string
 Content-Type: application/json
 
 {
@@ -3724,8 +2803,7 @@ Content-Type: application/json
         "resource_type": "string",
         "upload_picture": {
             "url": "string",
-            "trim": "string",
-            "rename": "string"
+            "trim": "string"
         }
     }
 }
@@ -3743,9 +2821,9 @@ Content-Type: application/json
     "upload_filename": "string",
     "upload_request": "string",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -3768,8 +2846,7 @@ In person profile or company logo, this uploaded picture can be used with the re
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 resource | body | object | Optional. 
 
 ### Responses
@@ -3784,6 +2861,7 @@ default | object | General 400/500 error
 
 ```http
 GET /en/api/v2/event/{event_id}/resources/pictures/{resource_id} HTTP/1.1
+ext_id_system: string
 ```
 	
 ```http
@@ -3798,9 +2876,9 @@ Content-Type: application/json
     "upload_filename": "string",
     "upload_request": "string",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -3823,9 +2901,8 @@ Placeholder
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 resource_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the resource ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
@@ -3838,6 +2915,7 @@ default | object | General 400/500 error
 
 ```http
 PUT /en/api/v2/event/{event_id}/resources/pictures/{resource_id} HTTP/1.1
+ext_id_system: string
 Content-Type: application/json
 
 {
@@ -3845,8 +2923,7 @@ Content-Type: application/json
         "resource_type": "string",
         "upload_picture": {
             "url": "string",
-            "trim": "string",
-            "rename": "string"
+            "trim": "string"
         }
     }
 }
@@ -3864,9 +2941,9 @@ Content-Type: application/json
     "upload_filename": "string",
     "upload_request": "string",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -3889,9 +2966,8 @@ Placeholder
 Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 resource_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the resource ID.
-timestamp_format | query | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 resource | body | object | Optional. 
 
 ### Responses
@@ -3903,200 +2979,6 @@ default | object | General 400/500 error
 
 
 # Models
-## EventObjectRequest
-```json
-{
-    "id": "string",
-    "external_ids": [
-        {
-            "id_system": "string",
-            "id": "string"
-        }
-    ],
-    "short_code": "string",
-    "name": "string",
-    "description": "string",
-    "language": "string",
-    "event_location": {
-        "location_name": "string",
-        "location_address": "string"
-    },
-    "event_dates": {
-        "start_date": "string",
-        "end_date": "string",
-        "time_zone_tz": "string",
-        "time_zone_offset": "string",
-        "time_format": "integer"
-    }
-}
-```
-	
-### Fields
-Name | Type | Description
---- | --- | ---
-id | string | the target Eventmobi ID of event.
-external_ids | array[object] | the external IDs used for integrations.
-short_code | string | the short-code and url path of event
-name | string | the event name
-description | string | the description of event in HTML code
-language | string | the language of event
-event_location | object | The location information of event
-event_dates | object | The dates info of event
-
-	
-## EventObjectResponse
-```json
-{
-    "id": "string",
-    "external_ids": [
-        {
-            "id_system": "string",
-            "id": "string"
-        }
-    ],
-    "short_code": "string",
-    "name": "string",
-    "description": "string",
-    "language": "string",
-    "data_counters": {
-        "sections": "integer",
-        "people": "integer",
-        "sessions": "integer",
-        "companies": "integer",
-        "documents": "integer",
-        "maps": "integer"
-    },
-    "event_location": {
-        "location_name": "string",
-        "location_address": "string"
-    },
-    "event_dates": {
-        "start_date": "string",
-        "end_date": "string",
-        "time_zone_tz": "string",
-        "time_zone_offset": "string",
-        "time_format": "integer"
-    },
-    "event_urls": {
-        "event_app": "string",
-        "reg_app": "string",
-        "checkin_app": "string",
-        "cms_app": "string"
-    },
-    "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
-    }
-}
-```
-	
-### Fields
-Name | Type | Description
---- | --- | ---
-id | string | the default Eventmobi ID of event.
-external_ids | array[object] | the external IDs used for integrations
-short_code | string | the short-code and url path of event
-name | string | the event name
-description | string | the description of event in HTML code
-language | string | the language of event
-data_counters | object | The numbers of each event data type. Auto-generated: will ignore in post request
-event_location | object | The location information of event
-event_dates | object | The dates info of event
-event_urls | object | The URLs of each Eventmobi products. Auto-generated: will ignore in post request
-timestamps | object | The timestamps for the object in either timestamp integer or ISO Date+Time+TimeZone format (E.g. 2016-09-02T15:26:49-04:00 for the same timezone of this event) . Please use query parameter to idenitfy which one you want. Default value is ISO format.
-
-	
-## DataCounters
-```json
-{
-    "sections": "integer",
-    "people": "integer",
-    "sessions": "integer",
-    "companies": "integer",
-    "documents": "integer",
-    "maps": "integer"
-}
-```
-
-The numbers of each event data type. Auto-generated: will ignore in post request
-
-	
-### Fields
-Name | Type | Description
---- | --- | ---
-sections | integer | the number of front-end UI sections in this event
-people | integer | the number of people (speaker, attendee, etc.) in this event. Note: the contacts in reg mailing list are not included.
-sessions | integer | the number of session included in this event
-companies | integer | the number of companies included in this event
-documents | integer | the number of documents uploaded
-maps | integer | the number of maps
-
-	
-## EventLocation
-```json
-{
-    "location_name": "string",
-    "location_address": "string"
-}
-```
-
-The location information of event
-
-	
-### Fields
-Name | Type | Description
---- | --- | ---
-location_name | string | the name of location (e.g. Eventmobi HQ)
-location_address | string | the full address of location (e.g. 175 Bloor St East, Toronto, ON M4W 3R8). Please test with Google Maps to ensure the address can be located correctly.
-
-	
-## EventDates
-```json
-{
-    "start_date": "string",
-    "end_date": "string",
-    "time_zone_tz": "string",
-    "time_zone_offset": "string",
-    "time_format": "integer"
-}
-```
-
-The dates info of event
-
-	
-### Fields
-Name | Type | Description
---- | --- | ---
-start_date | string | the start date of event in YYYY-MM-DD
-end_date | string | the end date of event in YYYY-MM-DD
-time_zone_tz | string | the timezone tz name in https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. E.g. America/Toronto
-time_zone_offset | string | the timezone offset to UTC. E.g. -05:00
-time_format | integer | the number value can be 12 or 24 hours format. Default value: 12
-
-	
-## EventURLs
-```json
-{
-    "event_app": "string",
-    "reg_app": "string",
-    "checkin_app": "string",
-    "cms_app": "string"
-}
-```
-
-The URLs of each Eventmobi products. Auto-generated: will ignore in post request
-
-	
-### Fields
-Name | Type | Description
---- | --- | ---
-event_app | string | the URL to launch event web App
-reg_app | string | the URL to launch reg web App
-checkin_app | string | the URL to launch check in App
-cms_app | string | the URL to launch CMS backend
-
-	
 ## PeopleOverview
 ```json
 {
@@ -4106,33 +2988,37 @@ cms_app | string | the URL to launch CMS backend
     "groups": [
         {
             "group_id": "string",
+            "external_ids": [
+                {
+                    "id_system": "string",
+                    "id": "string"
+                }
+            ],
+            "group_type": "string",
             "group_name": "string",
             "group_color": "string",
-            "group_note": "string",
-            "sub_group_ids": [
-                "string"
-            ],
             "member_number": "number",
             "timestamps": {
-                "request_timestamp": "string",
-                "creation_timestamp": "string",
-                "update_timestamp": "string"
+                "request_datetime": "string",
+                "creation_datetime": "string",
+                "update_datetime": "string"
             }
         }
     ],
     "custom_fields": [
         {
             "custom_field_id": "string",
+            "external_ids": [
+                {
+                    "id_system": "string",
+                    "id": "string"
+                }
+            ],
             "field_name": "string",
             "view_permission": "string",
             "edit_permission": "string"
         }
-    ],
-    "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
-    }
+    ]
 }
 ```
 
@@ -4147,7 +3033,6 @@ group_number | integer | the number of groups defined
 custom_field_number | integer | the number of custom fields
 groups | array[object] | the groups defined in this event.
 custom_fields | array[object] | the custom fields defined in this event
-timestamps | object | The timestamps for the object in either timestamp integer or ISO Date+Time+TimeZone format (E.g. 2016-09-02T15:26:49-04:00 for the same timezone of this event) . Please use query parameter to idenitfy which one you want. Default value is ISO format.
 
 	
 ## PeopleRecordsResponse
@@ -4168,10 +3053,7 @@ timestamps | object | The timestamps for the object in either timestamp integer 
                 "first_name": "string",
                 "last_name": "string",
                 "email_address": "string",
-                "picture": "string",
-                "groups": [
-                    "string"
-                ],
+                "picture_url": "string",
                 "company": "string",
                 "title": "string",
                 "about": "string",
@@ -4183,41 +3065,37 @@ timestamps | object | The timestamps for the object in either timestamp integer 
                 }
             },
             "custom_fields_meta": "object",
-            "favorite_data": {
-                "sessions": "object",
-                "companies": "object",
-                "docs": "object",
-                "notes": "object"
-            },
-            "regstration": {
-                "order_ticket_name": "string",
-                "order_paid": "string",
-                "order_transaction_id": "string",
-                "reg_email_campaign": "string",
-                "reg_utm": "string",
-                "form_meta": [
+            "groups": [
+                {
+                    "group_id": "string",
+                    "group_name": "string"
+                }
+            ],
+            "agenda": {
+                "sessions": [
                     {
-                        "question": "string",
-                        "answer": "string"
+                        "session_id": "string",
+                        "session_roles": [
+                            "string"
+                        ]
                     }
                 ]
+            },
+            "favorite_data": {
+                "sessions": [
+                    "string"
+                ],
+                "companies": "object",
+                "docs": "object"
             },
             "docs": [
                 "string"
             ],
-            "config_meta": "object",
-            "tags": "string",
-            "activities": [
-                {
-                    "product": "string",
-                    "action": "string",
-                    "timestamp": "string"
-                }
-            ],
+            "personal_settings": "object",
             "timestamps": {
-                "request_timestamp": "string",
-                "creation_timestamp": "string",
-                "update_timestamp": "string"
+                "request_datetime": "string",
+                "creation_datetime": "string",
+                "update_datetime": "string"
             }
         }
     ]
@@ -4249,10 +3127,7 @@ people_list | array[object] | the array of people
         "first_name": "string",
         "last_name": "string",
         "email_address": "string",
-        "picture": "string",
-        "groups": [
-            "string"
-        ],
+        "picture_resource_id": "string",
         "company": "string",
         "title": "string",
         "about": "string",
@@ -4263,19 +3138,28 @@ people_list | array[object] | the array of people
             "website_url": "string"
         }
     },
+    "custom_fields_meta": "object",
+    "assign_groups": [
+        "string"
+    ],
+    "assign_agenda": {
+        "sessions": [
+            {
+                "session_id": "string",
+                "session_roles": [
+                    "string"
+                ]
+            }
+        ]
+    },
     "upload_picture": {
         "url": "string",
-        "trim": "string",
-        "rename": "string"
+        "trim": "string"
     },
-    "uplaod_docs": [
-        {
-            "url": "string",
-            "rename": "string",
-            "assign_groups": [
-                "string"
-            ]
-        }
+    "link_docs": [
+        [
+            "string"
+        ]
     ]
 }
 ```
@@ -4289,8 +3173,11 @@ Name | Type | Description
 person_id | string | the unique ID of person in people
 external_ids | array[object] | the external IDs used for integrations
 profile | object | the profile data of person. Including standard Eventmobi fields as well as custom fields.
-upload_picture | object | Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture filename in base profile.
-uplaod_docs | array[object] | 
+custom_fields_meta | object | the {custom_field_id:custom_field_value} format JSON object
+assign_groups | array[string] | the array of group IDs
+assign_agenda | object | Agenda for people record. Defaultly, if no session role is assigned, the people is attendee.
+upload_picture | object | Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.
+link_docs | array[array[string]] | 
 
 	
 ## PersonObjectResponse
@@ -4307,10 +3194,7 @@ uplaod_docs | array[object] |
         "first_name": "string",
         "last_name": "string",
         "email_address": "string",
-        "picture": "string",
-        "groups": [
-            "string"
-        ],
+        "picture_url": "string",
         "company": "string",
         "title": "string",
         "about": "string",
@@ -4322,41 +3206,37 @@ uplaod_docs | array[object] |
         }
     },
     "custom_fields_meta": "object",
-    "favorite_data": {
-        "sessions": "object",
-        "companies": "object",
-        "docs": "object",
-        "notes": "object"
-    },
-    "regstration": {
-        "order_ticket_name": "string",
-        "order_paid": "string",
-        "order_transaction_id": "string",
-        "reg_email_campaign": "string",
-        "reg_utm": "string",
-        "form_meta": [
+    "groups": [
+        {
+            "group_id": "string",
+            "group_name": "string"
+        }
+    ],
+    "agenda": {
+        "sessions": [
             {
-                "question": "string",
-                "answer": "string"
+                "session_id": "string",
+                "session_roles": [
+                    "string"
+                ]
             }
         ]
+    },
+    "favorite_data": {
+        "sessions": [
+            "string"
+        ],
+        "companies": "object",
+        "docs": "object"
     },
     "docs": [
         "string"
     ],
-    "config_meta": "object",
-    "tags": "string",
-    "activities": [
-        {
-            "product": "string",
-            "action": "string",
-            "timestamp": "string"
-        }
-    ],
+    "personal_settings": "object",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -4370,26 +3250,23 @@ Name | Type | Description
 person_id | string | the unique ID of person in people
 external_ids | array[object] | the external IDs used for integrations
 profile | object | the profile data of person. Including standard Eventmobi fields as well as custom fields.
-custom_fields_meta | object | the {custom_field_key:custom_field_value} format JSON object
+custom_fields_meta | object | the {custom_field_id:custom_field_value} format JSON object
+groups | array[object] | The array of groups
+agenda | object | Agenda for people record. Defaultly, if no session role is assigned, the people is attendee.
 favorite_data | object | 
-regstration | object | the registriation info. Only avialable when using Eventmobi registration product.
 docs | array[string] | the docs linked to the people
-config_meta | object | the {config_feature_key:config_value} format JSON object E.g.  {&quot;Enable Messaging&quot;:&quot;true&quot;}.
-tags | string | tags for the person. Seperated by &quot;,&quot; between keywords.
-activities | array[object] | activity logs of a person record.
+personal_settings | object | &#039;the {config_feature_key:config_value} format JSON object E.g.  {&quot;direct_messaging&quot;:&quot;true&quot;, &quot;offline_email_messaging&quot;: &quot;true&quot;}.&#039;
+
 timestamps | object | The timestamps for the object in either timestamp integer or ISO Date+Time+TimeZone format (E.g. 2016-09-02T15:26:49-04:00 for the same timezone of this event) . Please use query parameter to idenitfy which one you want. Default value is ISO format.
 
 	
-## PersonProfile
+## PersonProfileRequest
 ```json
 {
     "first_name": "string",
     "last_name": "string",
     "email_address": "string",
-    "picture": "string",
-    "groups": [
-        "string"
-    ],
+    "picture_resource_id": "string",
     "company": "string",
     "title": "string",
     "about": "string",
@@ -4411,43 +3288,46 @@ Name | Type | Description
 first_name | string | 
 last_name | string | 
 email_address | string | 
-picture | string | 
-groups | array[string] | 
+picture_resource_id | string | the resource ID of pictures uploaded
 company | string | 
 title | string | 
 about | string | 
 social_contacts | object | The general contact info record
 
 	
-## PersonRegistration
+## PersonProfileResponse
 ```json
 {
-    "order_ticket_name": "string",
-    "order_paid": "string",
-    "order_transaction_id": "string",
-    "reg_email_campaign": "string",
-    "reg_utm": "string",
-    "form_meta": [
-        {
-            "question": "string",
-            "answer": "string"
-        }
-    ]
+    "first_name": "string",
+    "last_name": "string",
+    "email_address": "string",
+    "picture_url": "string",
+    "company": "string",
+    "title": "string",
+    "about": "string",
+    "social_contacts": {
+        "twitter_url": "string",
+        "facebook_url": "string",
+        "linkedin_url": "string",
+        "website_url": "string"
+    }
 }
 ```
 
-the registriation info. Only avialable when using Eventmobi registration product.
+the profile data of person. Including standard Eventmobi fields as well as custom fields.
 
 	
 ### Fields
 Name | Type | Description
 --- | --- | ---
-order_ticket_name | string | Ticket Name
-order_paid | string | Amount and Currency Type in format of &quot;$ 1,289 USD&quot;
-order_transaction_id | string | Striple transaction id for tracking
-reg_email_campaign | string | The email title user used to register
-reg_utm | string | The UTM tracking parameters in encoded string
-form_meta | array[object] | The info user filled in form in reg app
+first_name | string | 
+last_name | string | 
+email_address | string | 
+picture_url | string | the URL of /resource/picture returns after pictures uploaded
+company | string | 
+title | string | 
+about | string | 
+social_contacts | object | The general contact info record
 
 	
 ## SessionsOverview
@@ -4455,46 +3335,38 @@ form_meta | array[object] | The info user filled in form in reg app
 {
     "session_number": "integer",
     "track_number": "integer",
-    "custom_field_number": "integer",
     "session_role_number": "integer",
     "tracks": [
         {
             "group_id": "string",
+            "external_ids": [
+                {
+                    "id_system": "string",
+                    "id": "string"
+                }
+            ],
+            "group_type": "string",
             "group_name": "string",
             "group_color": "string",
-            "group_note": "string",
-            "sub_group_ids": [
-                "string"
-            ],
             "member_number": "number",
             "timestamps": {
-                "request_timestamp": "string",
-                "creation_timestamp": "string",
-                "update_timestamp": "string"
+                "request_datetime": "string",
+                "creation_datetime": "string",
+                "update_datetime": "string"
             }
         }
     ],
-    "custom_fields": [
-        {
-            "custom_field_id": "string",
-            "field_name": "string",
-            "view_permission": "string",
-            "edit_permission": "string"
-        }
-    ],
     "sessions_roles": [
-        {
-            "custom_field_id": "string",
-            "field_name": "string",
-            "view_permission": "string",
-            "edit_permission": "string"
-        }
-    ],
-    "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
-    }
+        [
+            {
+                "session_role_id": "string",
+                "session_role_name": "string",
+                "people_list": [
+                    "string"
+                ]
+            }
+        ]
+    ]
 }
 ```
 
@@ -4506,12 +3378,9 @@ Name | Type | Description
 --- | --- | ---
 session_number | integer | session number in this event. You may use this number for better query pagination.
 track_number | integer | the number of groups defined
-custom_field_number | integer | the number of custom fields
 session_role_number | integer | the number of session roles fields
 tracks | array[object] | the session groups defined in this event.
-custom_fields | array[object] | the custom fields defined in sessions
-sessions_roles | array[object] | the roles defined in sessions
-timestamps | object | The timestamps for the object in either timestamp integer or ISO Date+Time+TimeZone format (E.g. 2016-09-02T15:26:49-04:00 for the same timezone of this event) . Please use query parameter to idenitfy which one you want. Default value is ISO format.
+sessions_roles | array[array[object]] | the roles defined in sessions
 
 	
 ## SessionRecordsResponse
@@ -4547,16 +3416,17 @@ timestamps | object | The timestamps for the object in either timestamp integer 
             ],
             "session_roles": [
                 {
-                    "role_name": "string",
+                    "session_role_id": "string",
+                    "session_role_name": "string",
                     "people_list": [
                         "string"
                     ]
                 }
             ],
             "timestamps": {
-                "request_timestamp": "string",
-                "creation_timestamp": "string",
-                "update_timestamp": "string"
+                "request_datetime": "string",
+                "creation_datetime": "string",
+                "update_datetime": "string"
             }
         }
     ]
@@ -4606,7 +3476,8 @@ session_list | array[object] | the array of sessions
     ],
     "session_roles": [
         {
-            "role_name": "string",
+            "session_role_id": "string",
+            "session_role_name": "string",
             "people_list": [
                 "string"
             ]
@@ -4661,16 +3532,17 @@ session_roles | array[object] | the session roles like Speaker, Moderator, etc. 
     ],
     "session_roles": [
         {
-            "role_name": "string",
+            "session_role_id": "string",
+            "session_role_name": "string",
             "people_list": [
                 "string"
             ]
         }
     ],
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -4688,7 +3560,7 @@ session_end_time | string | the session end time in HH-MM in 24hour
 session_tracks | array[string] | the ID of tracks this session belongs to
 external_links | array[object] | 
 docs | array[string] | the docs linked to the people
-session_roles | array[object] | the session roles like Speaker, Moderator, etc. Attendees are not in this list.
+session_roles | array[object] | the session roles like Speaker, Moderator, etc. Attendees are not in this list. If you want to manage/update this list, you will need to provide the full array of roles. [Issue@Ryan do we support another endpoint like /roles]
 timestamps | object | The timestamps for the object in either timestamp integer or ISO Date+Time+TimeZone format (E.g. 2016-09-02T15:26:49-04:00 for the same timezone of this event) . Please use query parameter to idenitfy which one you want. Default value is ISO format.
 
 	
@@ -4698,8 +3570,7 @@ timestamps | object | The timestamps for the object in either timestamp integer 
     "resource_type": "string",
     "upload_picture": {
         "url": "string",
-        "trim": "string",
-        "rename": "string"
+        "trim": "string"
     }
 }
 ```
@@ -4711,7 +3582,7 @@ please provide the resource type and choose the resource info below.
 Name | Type | Description
 --- | --- | ---
 resource_type | string | 
-upload_picture | object | Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture filename in base profile.
+upload_picture | object | Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.
 
 	
 ## ResourceResponse
@@ -4724,9 +3595,9 @@ upload_picture | object | Use this structure if you want Eventmobi to download t
     "upload_filename": "string",
     "upload_request": "string",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -4762,7 +3633,7 @@ Name | Type | Description
 --- | --- | ---
 id_system | string | The external ID can be accessed when query indicateds which system the ID belongs to. The default system Eventmobi is reserved.
 
-id | string | the external ID
+id | string | the external ID. Must be unique in the same ID system. Case sensitive.
 
 	
 ## DocLink
@@ -4798,44 +3669,35 @@ link_url | string |
 	
 ## RequestUploadAssociateDoc
 ```json
-{
-    "url": "string",
-    "rename": "string",
-    "assign_groups": [
-        "string"
-    ]
-}
+[
+    "string"
+]
 ```
 
-Use this structure if you want Eventmobi to download the document from Internet locations and associate it.
+the array of Document IDs
 
 	
 ### Fields
 Name | Type | Description
 --- | --- | ---
-url | string | file location. Have to have a valid document type ()
-rename | string | Must be the same file type as origin. Supports jpeg, jpg and png.
-assign_groups | array[string] | the groups this documetion belongs to. the groups must be defined in CMS or this will be ignored.
 
 	
 ## RequestUploadAssociatePicture
 ```json
 {
     "url": "string",
-    "trim": "string",
-    "rename": "string"
+    "trim": "string"
 }
 ```
 
-Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture filename in base profile.
+Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.
 
 	
 ### Fields
 Name | Type | Description
 --- | --- | ---
 url | string | file location. Have to be a valid image file. Supports jpeg, jpg and png.
-trim | string | AxB:CxD means manually crop the image at left-top point AxB and right-bottom point CxD in pixels. This parameter is required if your image is not square (same height and length)
-rename | string | Must be the same file type as origin. Supports jpeg, jpg and png.
+trim | string | AxB:CxD means manually crop the image at left-top point AxB and right-bottom point CxD in pixels. The height and width of crop must be the same (image needs to be square). This parameter is required if your image is not square.
 
 	
 ## SocialContactInfo
@@ -4860,30 +3722,16 @@ linkedin_url | string |
 website_url | string | 
 
 	
-## RequestGeneralCustomField
-```json
-{
-    "field_name": "string",
-    "view_permission": "string",
-    "edit_permission": "string"
-}
-```
-
-The base custom field request
-
-	
-### Fields
-Name | Type | Description
---- | --- | ---
-field_name | string | the field name
-view_permission | string | 
-edit_permission | string | 
-
-	
 ## ResponseGeneralCustomFields
 ```json
 {
     "custom_field_id": "string",
+    "external_ids": [
+        {
+            "id_system": "string",
+            "id": "string"
+        }
+    ],
     "field_name": "string",
     "view_permission": "string",
     "edit_permission": "string"
@@ -4897,6 +3745,7 @@ The base custom field model
 Name | Type | Description
 --- | --- | ---
 custom_field_id | string | the unique ID of custom field
+external_ids | array[object] | the external IDs used for integrations
 field_name | string | the field name
 view_permission | string | 
 edit_permission | string | 
@@ -4906,17 +3755,20 @@ edit_permission | string |
 ```json
 {
     "group_id": "string",
+    "external_ids": [
+        {
+            "id_system": "string",
+            "id": "string"
+        }
+    ],
+    "group_type": "string",
     "group_name": "string",
     "group_color": "string",
-    "group_note": "string",
-    "sub_group_ids": [
-        "string"
-    ],
     "member_number": "number",
     "timestamps": {
-        "request_timestamp": "string",
-        "creation_timestamp": "string",
-        "update_timestamp": "string"
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
     }
 }
 ```
@@ -4928,11 +3780,86 @@ The base response model of groups
 Name | Type | Description
 --- | --- | ---
 group_id | string | the unique ID of group
+external_ids | array[object] | the external IDs used for integrations
+group_type | string | for people group, it could be &quot;attendees&quot; or &quot;speakers&quot; or &quot;custom&quot;. For other groups, it will be always &quot;custom&quot; for now.
 group_name | string | the unique name of group
 group_color | string | the HEX color code in #RRGGBB
-group_note | string | the optional note/explaination of this group
-sub_group_ids | array[string] | the id array of sub-groups/sub-tracks
 member_number | number | the auto-generated number of members in this group
+timestamps | object | The timestamps for the object in either timestamp integer or ISO Date+Time+TimeZone format (E.g. 2016-09-02T15:26:49-04:00 for the same timezone of this event) . Please use query parameter to idenitfy which one you want. Default value is ISO format.
+
+	
+## SessionRoles
+```json
+[
+    {
+        "session_role_id": "string",
+        "session_role_name": "string",
+        "people_list": [
+            "string"
+        ]
+    }
+]
+```
+
+the session roles like Speaker, Moderator, etc. Attendees are not in this list. If you want to manage/update this list, you will need to provide the full array of roles. [Issue@Ryan do we support another endpoint like /roles]
+
+	
+### Fields
+Name | Type | Description
+--- | --- | ---
+
+	
+## SessionRole
+```json
+{
+    "session_role_id": "string",
+    "session_role_name": "string",
+    "people_list": [
+        "string"
+    ]
+}
+```
+	
+### Fields
+Name | Type | Description
+--- | --- | ---
+session_role_id | string | the unique ID for session role
+session_role_name | string | currently only supports &quot;Speaker&quot; and &quot;Moderator&quot;
+people_list | array[string] | 
+
+	
+## ResponseGeneralTrack
+```json
+{
+    "track_id": "string",
+    "external_ids": [
+        {
+            "id_system": "string",
+            "id": "string"
+        }
+    ],
+    "track_name": "string",
+    "track_color": "string",
+    "track_session_number": "number",
+    "timestamps": {
+        "request_datetime": "string",
+        "creation_datetime": "string",
+        "update_datetime": "string"
+    }
+}
+```
+
+The track info in response
+
+	
+### Fields
+Name | Type | Description
+--- | --- | ---
+track_id | string | the unique ID of track
+external_ids | array[object] | the external IDs used for integrations
+track_name | string | the unique name of track
+track_color | string | the HEX color code in #RRGGBB
+track_session_number | number | the auto-generated number of members in this track
 timestamps | object | The timestamps for the object in either timestamp integer or ISO Date+Time+TimeZone format (E.g. 2016-09-02T15:26:49-04:00 for the same timezone of this event) . Please use query parameter to idenitfy which one you want. Default value is ISO format.
 
 	
@@ -4951,9 +3878,9 @@ timestamps | object | The timestamps for the object in either timestamp integer 
         "last_name": "string",
         "email_address": "string",
         "timestamps": {
-            "request_timestamp": "string",
-            "creation_timestamp": "string",
-            "update_timestamp": "string"
+            "request_datetime": "string",
+            "creation_datetime": "string",
+            "update_datetime": "string"
         }
     }
 ]
@@ -5000,7 +3927,7 @@ Name | Type | Description
 }
 ```
 
-Define new group
+Define new group. group_type will be assigned as &quot;custom&quot;.
 
 	
 ### Fields
@@ -5012,51 +3939,54 @@ group_note | string | the optional note/explaination of this group
 group_members | array[object] | the members to be added to the group. Please provide either id or email.
 
 	
-## AttendeePersonalData
+## AttendeeAgenda
 ```json
 {
-    "sessions": "object",
+    "sessions": [
+        {
+            "session_id": "string",
+            "session_roles": [
+                "string"
+            ]
+        }
+    ]
+}
+```
+
+Agenda for people record. Defaultly, if no session role is assigned, the people is attendee.
+
+	
+### Fields
+Name | Type | Description
+--- | --- | ---
+sessions | array[object] | sessions info in array
+
+	
+## AttendeeFavData
+```json
+{
+    "sessions": [
+        "string"
+    ],
     "companies": "object",
-    "docs": "object",
-    "notes": "object"
+    "docs": "object"
 }
 ```
 	
 ### Fields
 Name | Type | Description
 --- | --- | ---
-sessions | object | 
+sessions | array[string] | the personal agenda with session IDs to attend
 companies | object | 
 docs | object | 
-notes | object | 
-
-	
-## GeneralActivityRecord
-```json
-{
-    "product": "string",
-    "action": "string",
-    "timestamp": "string"
-}
-```
-
-A single record of people activity history
-
-	
-### Fields
-Name | Type | Description
---- | --- | ---
-product | string | the product of activity. E.g. App/Reg/etc.
-action | string | the action info string
-timestamp | string | depends on the query parameter timestamp_format setting, this can return GMT/UTC timestamp integer or ISO string.
 
 	
 ## Timestamps
 ```json
 {
-    "request_timestamp": "string",
-    "creation_timestamp": "string",
-    "update_timestamp": "string"
+    "request_datetime": "string",
+    "creation_datetime": "string",
+    "update_datetime": "string"
 }
 ```
 
@@ -5066,9 +3996,9 @@ The timestamps for the object in either timestamp integer or ISO Date+Time+TimeZ
 ### Fields
 Name | Type | Description
 --- | --- | ---
-request_timestamp | string | The time of this API request
-creation_timestamp | string | the time of object creation
-update_timestamp | string | the time of last modification
+request_datetime | string | The time of this API request
+creation_datetime | string | the time of object creation
+update_datetime | string | the time of last modification
 
 	
 ## PlaceHolder
