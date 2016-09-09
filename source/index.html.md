@@ -11,7 +11,7 @@ search: true
 
 
 ## GET /events/{event_id}/people
-### Get people 
+### Show people overview 
 
 ```http
 GET /en/api/v2/events/{event_id}/people HTTP/1.1
@@ -91,7 +91,7 @@ default | object | General 400/500 error
 
 
 ## GET /events/{event_id}/people/resources
-### Get person 
+### Query people records 
 
 ```http
 GET /en/api/v2/events/{event_id}/people/resources HTTP/1.1
@@ -199,7 +199,7 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 ## POST /events/{event_id}/people/resources
-### Post person 
+### Add new person 
 
 ```http
 POST /en/api/v2/events/{event_id}/people/resources HTTP/1.1
@@ -349,7 +349,7 @@ default | object | General 400/500 error
 
 
 ## GET /events/{event_id}/people/resources/{person_id}
-### Get person_id 
+### Retrieve single person record 
 
 ```http
 GET /en/api/v2/events/{event_id}/people/resources/{person_id} HTTP/1.1
@@ -447,7 +447,7 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 ## PATCH /events/{event_id}/people/resources/{person_id}
-### Patch person_id 
+### Update person info 
 
 ```http
 PATCH /en/api/v2/events/{event_id}/people/resources/{person_id} HTTP/1.1
@@ -597,7 +597,7 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 ## PUT /events/{event_id}/people/resources/{person_id}
-### Put person_id 
+### Overwrite person info 
 
 ```http
 PUT /en/api/v2/events/{event_id}/people/resources/{person_id} HTTP/1.1
@@ -747,7 +747,7 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 ## DELETE /events/{event_id}/people/resources/{person_id}
-### Delete person_id 
+### Delete person 
 
 ```http
 DELETE /en/api/v2/events/{event_id}/people/resources/{person_id} HTTP/1.1
@@ -2264,11 +2264,11 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/sessions/resources/{session_id}/attendees
-### Retrieve the attendees of specific session 
+## GET /events/{event_id}/sessions/resources/{session_id}/roles
+### Retrieve the session roles of specific session. 
 
 ```http
-GET /en/api/v2/events/{event_id}/sessions/resources/{session_id}/attendees HTTP/1.1
+GET /en/api/v2/events/{event_id}/sessions/resources/{session_id}/roles HTTP/1.1
 ext_id_system: string
 ```
 	
@@ -2303,15 +2303,103 @@ ext_id_system | header | string | Optional. the external system of ID used in pa
 ### Responses
 Http code | Type | Description
 --- | --- | ---
-200 | object | List of attendees
+200 | object | List of session roles defined in this session
 default | object | General 400/500 error
 
 
-## POST /events/{event_id}/sessions/resources/{session_id}/attendees/{person_id}
-### Add an attendee to specifc session 
+## GET /events/{event_id}/sessions/resources/{session_id}/roles/{role_id}
+### Retrieve the specific session role of specific session. 
 
 ```http
-POST /en/api/v2/events/{event_id}/sessions/resources/{session_id}/attendees/{person_id} HTTP/1.1
+GET /en/api/v2/events/{event_id}/sessions/resources/{session_id}/roles/{role_id} HTTP/1.1
+ext_id_system: string
+```
+	
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+"object"
+```
+```http
+HTTP/1.1 [default] 
+Content-Type: application/json
+
+{
+    "code": "integer",
+    "message": "string",
+    "fields": "string"
+}
+```
+
+Placeholder
+
+
+
+### Parameters
+Name | In | Type | Description
+--- | --- | --- | ---
+event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
+session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
+role_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session role ID.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+
+### Responses
+Http code | Type | Description
+--- | --- | ---
+200 | object | Session role info
+default | object | General 400/500 error
+
+
+## GET /events/{event_id}/sessions/resources/{session_id}/roles/{role_id}/member
+### List the people assigned to session role for specific session. 
+
+```http
+GET /en/api/v2/events/{event_id}/sessions/resources/{session_id}/roles/{role_id}/member HTTP/1.1
+ext_id_system: string
+```
+	
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+"object"
+```
+```http
+HTTP/1.1 [default] 
+Content-Type: application/json
+
+{
+    "code": "integer",
+    "message": "string",
+    "fields": "string"
+}
+```
+
+Placeholder
+
+
+
+### Parameters
+Name | In | Type | Description
+--- | --- | --- | ---
+event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
+session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
+role_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session role ID.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+
+### Responses
+Http code | Type | Description
+--- | --- | ---
+200 | object | List of people in session role
+default | object | General 400/500 error
+
+
+## POST /events/{event_id}/sessions/resources/{session_id}/roles/{role_id}/members/{person_id}
+### Add an people to specifc session with specifc session role 
+
+```http
+POST /en/api/v2/events/{event_id}/sessions/resources/{session_id}/roles/{role_id}/members/{person_id} HTTP/1.1
 ext_id_system: string
 ```
 	
@@ -2351,21 +2439,22 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
+role_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session role ID.
 session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
 ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
 ### Responses
 Http code | Type | Description
 --- | --- | ---
-200 | object | The attendees
-409 | object | The attendee people is already in the session.
+200 | object | The people added
+409 | object | The people people is already in the session with this role.
 default | object | General 400/500 error
 
-## DELETE /events/{event_id}/sessions/resources/{session_id}/attendees/{person_id}
-### Delete person from session attendee list 
+## DELETE /events/{event_id}/sessions/resources/{session_id}/roles/{role_id}/members/{person_id}
+### Delete person from session attendee list with certain role 
 
 ```http
-DELETE /en/api/v2/events/{event_id}/sessions/resources/{session_id}/attendees/{person_id} HTTP/1.1
+DELETE /en/api/v2/events/{event_id}/sessions/resources/{session_id}/roles/{role_id}/members/{person_id} HTTP/1.1
 ext_id_system: string
 ```
 	
@@ -2402,6 +2491,7 @@ Name | In | Type | Description
 --- | --- | --- | ---
 event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
 person_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the person ID of specific event.
+role_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session role ID.
 session_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session ID (in event schedule).
 ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
 
@@ -2410,6 +2500,238 @@ Http code | Type | Description
 --- | --- | ---
 200 | no content | Success deleted
 404 | object | The attendee people doesn&#039;t belong to the session.
+default | object | General 400/500 error
+
+
+## GET /events/{event_id}/sessions/roles
+### Get all session roles defined in this event 
+
+```http
+GET /en/api/v2/events/{event_id}/sessions/roles HTTP/1.1
+ext_id_system: string
+```
+	
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+    "object"
+]
+```
+```http
+HTTP/1.1 [default] 
+Content-Type: application/json
+
+{
+    "code": "integer",
+    "message": "string",
+    "fields": "string"
+}
+```
+
+Placeholder
+
+
+
+### Parameters
+Name | In | Type | Description
+--- | --- | --- | ---
+event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+
+### Responses
+Http code | Type | Description
+--- | --- | ---
+200 | array[object] | The array of session roles defined
+default | object | General 400/500 error
+
+## POST /events/{event_id}/sessions/roles
+### Define new session role 
+
+```http
+POST /en/api/v2/events/{event_id}/sessions/roles HTTP/1.1
+ext_id_system: string
+Content-Type: application/json
+
+{
+    "role": "object"
+}
+```
+	
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+    "object"
+]
+```
+```http
+HTTP/1.1 [default] 
+Content-Type: application/json
+
+{
+    "code": "integer",
+    "message": "string",
+    "fields": "string"
+}
+```
+
+Placeholder
+
+
+
+### Parameters
+Name | In | Type | Description
+--- | --- | --- | ---
+event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+role | body | object | Optional. the new role to be defined
+
+### Responses
+Http code | Type | Description
+--- | --- | ---
+200 | array[object] | The new role defined
+default | object | General 400/500 error
+
+
+## PATCH /events/{event_id}/sessions/roles/{role_id}
+### Update the role definition 
+
+```http
+PATCH /en/api/v2/events/{event_id}/sessions/roles/{role_id} HTTP/1.1
+ext_id_system: string
+Content-Type: application/json
+
+{
+    "role": "object"
+}
+```
+	
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+"object"
+```
+```http
+HTTP/1.1 [default] 
+Content-Type: application/json
+
+{
+    "code": "integer",
+    "message": "string",
+    "fields": "string"
+}
+```
+
+Placeholder
+
+
+
+### Parameters
+Name | In | Type | Description
+--- | --- | --- | ---
+event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
+role_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session role ID.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+role | body | object | Optional. the role to be updated
+
+### Responses
+Http code | Type | Description
+--- | --- | ---
+200 | object | The role updated
+default | object | General 400/500 error
+
+## PUT /events/{event_id}/sessions/roles/{role_id}
+### Update the role definition 
+
+```http
+PUT /en/api/v2/events/{event_id}/sessions/roles/{role_id} HTTP/1.1
+ext_id_system: string
+Content-Type: application/json
+
+{
+    "role": "object"
+}
+```
+	
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+"object"
+```
+```http
+HTTP/1.1 [default] 
+Content-Type: application/json
+
+{
+    "code": "integer",
+    "message": "string",
+    "fields": "string"
+}
+```
+
+Placeholder
+
+
+
+### Parameters
+Name | In | Type | Description
+--- | --- | --- | ---
+event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
+role_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session role ID.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+role | body | object | Optional. the role to be updated
+
+### Responses
+Http code | Type | Description
+--- | --- | ---
+200 | object | The role updated
+default | object | General 400/500 error
+
+## DELETE /events/{event_id}/sessions/roles/{role_id}
+### Delete the session role defined. the people assigned with this role in sessions will be unlinked. 
+
+```http
+DELETE /en/api/v2/events/{event_id}/sessions/roles/{role_id} HTTP/1.1
+ext_id_system: string
+```
+	
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+"object"
+```
+```http
+HTTP/1.1 [default] 
+Content-Type: application/json
+
+{
+    "code": "integer",
+    "message": "string",
+    "fields": "string"
+}
+```
+
+Placeholder
+
+
+
+### Parameters
+Name | In | Type | Description
+--- | --- | --- | ---
+event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
+role_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the session role ID.
+ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
+
+### Responses
+Http code | Type | Description
+--- | --- | ---
+200 | object | The role deleted
 default | object | General 400/500 error
 
 
@@ -2637,11 +2959,11 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/sessions/tracks/{track_id}/list
+## GET /events/{event_id}/sessions/tracks/{track_id}/member
 ### Get all sessions in the track 
 
 ```http
-GET /en/api/v2/events/{event_id}/sessions/tracks/{track_id}/list HTTP/1.1
+GET /en/api/v2/events/{event_id}/sessions/tracks/{track_id}/member HTTP/1.1
 ext_id_system: string
 ```
 	
@@ -2680,66 +3002,11 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /events/{event_id}/sessions/custom_fields
-### Get all defined custom fields 
+## GET /event/{event_id}/images
+### Get the info of image uploaded for specific event 
 
 ```http
-GET /en/api/v2/events/{event_id}/sessions/custom_fields HTTP/1.1
-ext_id_system: string
-```
-	
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-[
-    {
-        "custom_field_id": "string",
-        "external_ids": [
-            {
-                "id_system": "string",
-                "id": "string"
-            }
-        ],
-        "field_name": "string",
-        "view_permission": "string",
-        "edit_permission": "string"
-    }
-]
-```
-```http
-HTTP/1.1 [default] 
-Content-Type: application/json
-
-{
-    "code": "integer",
-    "message": "string",
-    "fields": "string"
-}
-```
-
-This request will return an array of people custom fields. 
-
-
-
-### Parameters
-Name | In | Type | Description
---- | --- | --- | ---
-event_id<b title="required">&nbsp;*&nbsp;</b> | path | string | the event ID of specific event.
-ext_id_system | header | string | Optional. the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.
-
-### Responses
-Http code | Type | Description
---- | --- | ---
-200 | array[object] | The array of custom fields defined in People
-default | object | General 400/500 error
-
-
-## GET /event/{event_id}/resources/pictures
-### Get the info of pictures uploaded for specific event 
-
-```http
-GET /en/api/v2/event/{event_id}/resources/pictures HTTP/1.1
+GET /en/api/v2/event/{event_id}/images HTTP/1.1
 ext_id_system: string
 ```
 	
@@ -2787,14 +3054,14 @@ ext_id_system | header | string | Optional. the external system of ID used in pa
 ### Responses
 Http code | Type | Description
 --- | --- | ---
-200 | array[object] | the array of picture info
+200 | array[object] | the array of image info
 default | object | General 400/500 error
 
-## POST /event/{event_id}/resources/pictures
-### Upload new picture resource. 
+## POST /event/{event_id}/images
+### Upload new image resource. 
 
 ```http
-POST /en/api/v2/event/{event_id}/resources/pictures HTTP/1.1
+POST /en/api/v2/event/{event_id}/images HTTP/1.1
 ext_id_system: string
 Content-Type: application/json
 
@@ -2838,7 +3105,7 @@ Content-Type: application/json
 }
 ```
 
-In person profile or company logo, this uploaded picture can be used with the response filename (not url).
+In person profile or company logo, this uploaded image can be used with the responsed resource id (not url).
 
 
 
@@ -2856,11 +3123,11 @@ Http code | Type | Description
 default | object | General 400/500 error
 
 
-## GET /event/{event_id}/resources/pictures/{resource_id}
-### Get the info of specifc picture uploaded 
+## GET /event/{event_id}/images/{resource_id}
+### Get the info of specifc images uploaded 
 
 ```http
-GET /en/api/v2/event/{event_id}/resources/pictures/{resource_id} HTTP/1.1
+GET /en/api/v2/event/{event_id}/images/{resource_id} HTTP/1.1
 ext_id_system: string
 ```
 	
@@ -2910,11 +3177,11 @@ Http code | Type | Description
 200 | object | the uploaded picture info
 default | object | General 400/500 error
 
-## PUT /event/{event_id}/resources/pictures/{resource_id}
+## PUT /event/{event_id}/images/{resource_id}
 ### Replace the uploaded picture with the same filename 
 
 ```http
-PUT /en/api/v2/event/{event_id}/resources/pictures/{resource_id} HTTP/1.1
+PUT /en/api/v2/event/{event_id}/images/{resource_id} HTTP/1.1
 ext_id_system: string
 Content-Type: application/json
 
@@ -3176,7 +3443,7 @@ profile | object | the profile data of person. Including standard Eventmobi fiel
 custom_fields_meta | object | the {custom_field_id:custom_field_value} format JSON object
 assign_groups | array[string] | the array of group IDs
 assign_agenda | object | Agenda for people record. Defaultly, if no session role is assigned, the people is attendee.
-upload_picture | object | Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.
+upload_picture | object | Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.
 link_docs | array[array[string]] | 
 
 	
@@ -3582,7 +3849,7 @@ please provide the resource type and choose the resource info below.
 Name | Type | Description
 --- | --- | ---
 resource_type | string | 
-upload_picture | object | Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.
+upload_picture | object | Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.
 
 	
 ## ResourceResponse
@@ -3690,7 +3957,7 @@ Name | Type | Description
 }
 ```
 
-Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.
+Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.
 
 	
 ### Fields

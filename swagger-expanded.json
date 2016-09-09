@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "title": "EventMobi API V2 Spec",
-        "description": "Eventmobi Public API documentation.\n\nPlease refer to [developer site for tutotials, SDK and helps](http://google.ca).\n\nUpdated Aug 2016. Please refer to the [patch notes for details](http://google.ca).\n",
+        "description": "Eventmobi Public API documentation draft Sep-9.",
         "version": "2.0.1a"
     },
     "host": "api.eventmobi.com",
@@ -16,7 +16,7 @@
     "paths": {
         "/events/{event_id}/people": {
             "get": {
-                "summary": "GET people",
+                "summary": "Show People overview",
                 "description": "This request will return an overview of people data statistics in specific events. \n",
                 "parameters": [
                     {
@@ -206,7 +206,7 @@
         },
         "/events/{event_id}/people/resources": {
             "get": {
-                "summary": "GET person",
+                "summary": "Query people records",
                 "description": "This request will return an array of people data statistics in specific events. Default paginition is the first 20 records from offset 0. \n",
                 "parameters": [
                     {
@@ -476,7 +476,7 @@
                 }
             },
             "post": {
-                "summary": "POST person",
+                "summary": "Add new person",
                 "description": "Add new person in the event\n",
                 "parameters": [
                     {
@@ -607,7 +607,7 @@
                                 },
                                 "upload_picture": {
                                     "type": "object",
-                                    "description": "Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
+                                    "description": "Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
                                     "properties": {
                                         "url": {
                                             "type": "string",
@@ -833,7 +833,7 @@
         },
         "/events/{event_id}/people/resources/{person_id}": {
             "get": {
-                "summary": "GET person_id",
+                "summary": "Retrieve single person record",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -1055,7 +1055,7 @@
                 }
             },
             "patch": {
-                "summary": "PATCH person_id",
+                "summary": "Update person info",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -1193,7 +1193,7 @@
                                 },
                                 "upload_picture": {
                                     "type": "object",
-                                    "description": "Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
+                                    "description": "Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
                                     "properties": {
                                         "url": {
                                             "type": "string",
@@ -1417,7 +1417,7 @@
                 }
             },
             "put": {
-                "summary": "PUT person_id",
+                "summary": "Overwrite person info",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -1555,7 +1555,7 @@
                                 },
                                 "upload_picture": {
                                     "type": "object",
-                                    "description": "Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
+                                    "description": "Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
                                     "properties": {
                                         "url": {
                                             "type": "string",
@@ -1779,7 +1779,7 @@
                 }
             },
             "delete": {
-                "summary": "DELETE person_id",
+                "summary": "Delete person",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -4852,9 +4852,9 @@
                 }
             }
         },
-        "/events/{event_id}/sessions/resources/{session_id}/attendees": {
+        "/events/{event_id}/sessions/resources/{session_id}/roles": {
             "get": {
-                "summary": "Retrieve the attendees of specific session",
+                "summary": "Retrieve the session roles of specific session.",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -4880,12 +4880,11 @@
                     }
                 ],
                 "tags": [
-                    "People",
                     "Session"
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of attendees",
+                        "description": "List of session roles defined in this session",
                         "schema": {
                             "type": "object",
                             "description": "This is the placeholder"
@@ -4912,9 +4911,142 @@
                 }
             }
         },
-        "/events/{event_id}/sessions/resources/{session_id}/attendees/{person_id}": {
+        "/events/{event_id}/sessions/resources/{session_id}/roles/{role_id}": {
+            "get": {
+                "summary": "Retrieve the specific session role of specific session.",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "the event ID of specific event.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "session_id",
+                        "in": "path",
+                        "description": "the session ID (in event schedule).",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "the session role ID.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ext_id_system",
+                        "in": "header",
+                        "description": "the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Session role info",
+                        "schema": {
+                            "type": "object",
+                            "description": "This is the placeholder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "fields": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/resources/{session_id}/roles/{role_id}/member": {
+            "get": {
+                "summary": "List the people assigned to session role for specific session.",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "the event ID of specific event.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "session_id",
+                        "in": "path",
+                        "description": "the session ID (in event schedule).",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "the session role ID.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ext_id_system",
+                        "in": "header",
+                        "description": "the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of people in session role",
+                        "schema": {
+                            "type": "object",
+                            "description": "This is the placeholder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "fields": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/resources/{session_id}/roles/{role_id}/members/{person_id}": {
             "post": {
-                "summary": "Add an attendee to specifc session",
+                "summary": "Add an people to specifc session with specifc session role",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -4928,6 +5060,13 @@
                         "name": "person_id",
                         "in": "path",
                         "description": "the person ID of specific event.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "the session role ID.",
                         "required": true,
                         "type": "string"
                     },
@@ -4952,14 +5091,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "The attendees",
+                        "description": "The people added",
                         "schema": {
                             "type": "object",
                             "description": "This is the placeholder"
                         }
                     },
                     "409": {
-                        "description": "The attendee people is already in the session.",
+                        "description": "The people people is already in the session with this role.",
                         "schema": {
                             "type": "object",
                             "properties": {
@@ -4997,7 +5136,7 @@
                 }
             },
             "delete": {
-                "summary": "Delete person from session attendee list",
+                "summary": "Delete person from session attendee list with certain role",
                 "description": "Delete person from session attendee list\n",
                 "parameters": [
                     {
@@ -5011,6 +5150,13 @@
                         "name": "person_id",
                         "in": "path",
                         "description": "the person ID of specific event.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "the session role ID.",
                         "required": true,
                         "type": "string"
                     },
@@ -5076,6 +5222,314 @@
                 }
             }
         },
+        "/events/{event_id}/sessions/roles": {
+            "get": {
+                "summary": "Get all session roles defined in this event",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "the event ID of specific event.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ext_id_system",
+                        "in": "header",
+                        "description": "the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The array of session roles defined",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "description": "This is the placeholder"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "fields": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Define new session role",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "the event ID of specific event.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ext_id_system",
+                        "in": "header",
+                        "description": "the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role",
+                        "in": "body",
+                        "description": "the new role to be defined",
+                        "schema": {
+                            "type": "object",
+                            "description": "This is the placeholder"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The new role defined",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "description": "This is the placeholder"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "fields": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/roles/{role_id}": {
+            "patch": {
+                "summary": "update the role definition",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "the event ID of specific event.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "the session role ID.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ext_id_system",
+                        "in": "header",
+                        "description": "the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role",
+                        "in": "body",
+                        "description": "the role to be updated",
+                        "schema": {
+                            "type": "object",
+                            "description": "This is the placeholder"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The role updated",
+                        "schema": {
+                            "type": "object",
+                            "description": "This is the placeholder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "fields": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "update the role definition",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "the event ID of specific event.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "the session role ID.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ext_id_system",
+                        "in": "header",
+                        "description": "the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role",
+                        "in": "body",
+                        "description": "the role to be updated",
+                        "schema": {
+                            "type": "object",
+                            "description": "This is the placeholder"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The role updated",
+                        "schema": {
+                            "type": "object",
+                            "description": "This is the placeholder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "fields": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "delete the session role defined. The people assigned with this role in sessions will be unlinked.",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "name": "event_id",
+                        "in": "path",
+                        "description": "the event ID of specific event.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "role_id",
+                        "in": "path",
+                        "description": "the session role ID.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ext_id_system",
+                        "in": "header",
+                        "description": "the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The role deleted",
+                        "schema": {
+                            "type": "object",
+                            "description": "This is the placeholder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "fields": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/events/{event_id}/sessions/tracks": {
             "get": {
                 "summary": "Get all defined Session Tracks",
@@ -5098,7 +5552,7 @@
                 ],
                 "tags": [
                     "Session",
-                    "Group"
+                    "Track"
                 ],
                 "responses": {
                     "200": {
@@ -5215,7 +5669,7 @@
                 ],
                 "tags": [
                     "Session",
-                    "Group"
+                    "Track"
                 ],
                 "responses": {
                     "200": {
@@ -5330,7 +5784,7 @@
                 ],
                 "tags": [
                     "Session",
-                    "Group"
+                    "Track"
                 ],
                 "responses": {
                     "200": {
@@ -5443,7 +5897,7 @@
                 ],
                 "tags": [
                     "Session",
-                    "Group"
+                    "Track"
                 ],
                 "responses": {
                     "200": {
@@ -5474,7 +5928,7 @@
                 }
             }
         },
-        "/events/{event_id}/sessions/tracks/{track_id}/list": {
+        "/events/{event_id}/sessions/tracks/{track_id}/member": {
             "get": {
                 "summary": "Get all sessions in the track",
                 "description": "This request will return basic info of sessions in the track. \n",
@@ -5503,7 +5957,7 @@
                 ],
                 "tags": [
                     "Session",
-                    "Group"
+                    "Track"
                 ],
                 "responses": {
                     "200": {
@@ -5534,109 +5988,9 @@
                 }
             }
         },
-        "/events/{event_id}/sessions/custom_fields": {
+        "/event/{event_id}/images": {
             "get": {
-                "summary": "Get all defined Custom Fields",
-                "description": "This request will return an array of people custom fields. \n",
-                "parameters": [
-                    {
-                        "name": "event_id",
-                        "in": "path",
-                        "description": "the event ID of specific event.",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "ext_id_system",
-                        "in": "header",
-                        "description": "the external system of ID used in path. Default value is Eventmobi. Once used, all IDs will use external system. For each ID in path, if the external system ID is not defined, will use default instead.",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "tags": [
-                    "Session",
-                    "Customize"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "The array of custom fields defined in People",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "description": "The base custom field model",
-                                "properties": {
-                                    "custom_field_id": {
-                                        "type": "string",
-                                        "description": "the unique ID of custom field"
-                                    },
-                                    "external_ids": {
-                                        "type": "array",
-                                        "description": "the external IDs used for integrations",
-                                        "items": {
-                                            "type": "object",
-                                            "description": "The IDs from different systems. Used for integration mapping. A default Eventmobi ID will always be generated and cannot be changed once created. Additional IDs can be added/updated for external systems.",
-                                            "properties": {
-                                                "id_system": {
-                                                    "type": "string",
-                                                    "description": "The external ID can be accessed when query indicateds which system the ID belongs to. The default system Eventmobi is reserved.\n"
-                                                },
-                                                "id": {
-                                                    "type": "string",
-                                                    "description": "the external ID. Must be unique in the same ID system. Case sensitive."
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "field_name": {
-                                        "type": "string",
-                                        "description": "the field name"
-                                    },
-                                    "view_permission": {
-                                        "type": "string",
-                                        "enum": [
-                                            "Everyone",
-                                            "Organizer and Data Owner",
-                                            "Organizer"
-                                        ]
-                                    },
-                                    "edit_permission": {
-                                        "type": "string",
-                                        "enum": [
-                                            "Everyone",
-                                            "Organizer and Data Owner",
-                                            "Organizer"
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "default": {
-                        "description": "General 400/500 error",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "code": {
-                                    "type": "integer",
-                                    "format": "int32"
-                                },
-                                "message": {
-                                    "type": "string"
-                                },
-                                "fields": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/event/{event_id}/resources/pictures": {
-            "get": {
-                "summary": "Get the info of pictures uploaded for specific event",
+                "summary": "Get the info of image uploaded for specific event",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -5659,7 +6013,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "the array of picture info",
+                        "description": "the array of image info",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -5735,8 +6089,8 @@
                 }
             },
             "post": {
-                "summary": "Upload new picture resource.",
-                "description": "In person profile or company logo, this uploaded picture can be used with the response filename (not url).\n",
+                "summary": "Upload new image resource.",
+                "description": "In person profile or company logo, this uploaded image can be used with the responsed resource id (not url).\n",
                 "parameters": [
                     {
                         "name": "event_id",
@@ -5767,7 +6121,7 @@
                                 },
                                 "upload_picture": {
                                     "type": "object",
-                                    "description": "Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
+                                    "description": "Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
                                     "properties": {
                                         "url": {
                                             "type": "string",
@@ -5862,9 +6216,9 @@
                 }
             }
         },
-        "/event/{event_id}/resources/pictures/{resource_id}": {
+        "/event/{event_id}/images/{resource_id}": {
             "get": {
-                "summary": "Get the info of specifc picture uploaded",
+                "summary": "Get the info of specifc images uploaded",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -6006,7 +6360,7 @@
                                 },
                                 "upload_picture": {
                                     "type": "object",
-                                    "description": "Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
+                                    "description": "Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
                                     "properties": {
                                         "url": {
                                             "type": "string",
@@ -6543,7 +6897,7 @@
                 },
                 "upload_picture": {
                     "type": "object",
-                    "description": "Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
+                    "description": "Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
                     "properties": {
                         "url": {
                             "type": "string",
@@ -7329,7 +7683,7 @@
                 },
                 "upload_picture": {
                     "type": "object",
-                    "description": "Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
+                    "description": "Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
                     "properties": {
                         "url": {
                             "type": "string",
@@ -7433,7 +7787,7 @@
         },
         "RequestUploadAssociatePicture": {
             "type": "object",
-            "description": "Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
+            "description": "Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
             "properties": {
                 "url": {
                     "type": "string",
@@ -7902,6 +8256,13 @@
             "name": "track_id",
             "in": "path",
             "description": "the track ID.",
+            "required": true,
+            "type": "string"
+        },
+        "RoleIDParam": {
+            "name": "role_id",
+            "in": "path",
+            "description": "the session role ID.",
             "required": true,
             "type": "string"
         },

@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "title": "EventMobi API V2 Spec",
-        "description": "Eventmobi Public API documentation.\n\nPlease refer to [developer site for tutotials, SDK and helps](http://google.ca).\n\nUpdated Aug 2016. Please refer to the [patch notes for details](http://google.ca).\n",
+        "description": "Eventmobi Public API documentation draft Sep-9.",
         "version": "2.0.1a"
     },
     "host": "api.eventmobi.com",
@@ -16,7 +16,7 @@
     "paths": {
         "/events/{event_id}/people": {
             "get": {
-                "summary": "GET people",
+                "summary": "Show People overview",
                 "description": "This request will return an overview of people data statistics in specific events. \n",
                 "parameters": [
                     {
@@ -47,7 +47,7 @@
         },
         "/events/{event_id}/people/resources": {
             "get": {
-                "summary": "GET person",
+                "summary": "Query people records",
                 "description": "This request will return an array of people data statistics in specific events. Default paginition is the first 20 records from offset 0. \n",
                 "parameters": [
                     {
@@ -91,7 +91,7 @@
                 }
             },
             "post": {
-                "summary": "POST person",
+                "summary": "Add new person",
                 "description": "Add new person in the event\n",
                 "parameters": [
                     {
@@ -129,7 +129,7 @@
         },
         "/events/{event_id}/people/resources/{person_id}": {
             "get": {
-                "summary": "GET person_id",
+                "summary": "Retrieve single person record",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -161,7 +161,7 @@
                 }
             },
             "patch": {
-                "summary": "PATCH person_id",
+                "summary": "Update person info",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -200,7 +200,7 @@
                 }
             },
             "put": {
-                "summary": "PUT person_id",
+                "summary": "Overwrite person info",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -239,7 +239,7 @@
                 }
             },
             "delete": {
-                "summary": "DELETE person_id",
+                "summary": "Delete person",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -987,9 +987,9 @@
                 }
             }
         },
-        "/events/{event_id}/sessions/resources/{session_id}/attendees": {
+        "/events/{event_id}/sessions/resources/{session_id}/roles": {
             "get": {
-                "summary": "Retrieve the attendees of specific session",
+                "summary": "Retrieve the session roles of specific session.",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -1003,12 +1003,11 @@
                     }
                 ],
                 "tags": [
-                    "People",
                     "Session"
                 ],
                 "responses": {
                     "200": {
-                        "description": "List of attendees",
+                        "description": "List of session roles defined in this session",
                         "schema": {
                             "$ref": "#/definitions/PlaceHolder"
                         }
@@ -1022,9 +1021,84 @@
                 }
             }
         },
-        "/events/{event_id}/sessions/resources/{session_id}/attendees/{person_id}": {
+        "/events/{event_id}/sessions/resources/{session_id}/roles/{role_id}": {
+            "get": {
+                "summary": "Retrieve the specific session role of specific session.",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/RoleIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Session role info",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/resources/{session_id}/roles/{role_id}/member": {
+            "get": {
+                "summary": "List the people assigned to session role for specific session.",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/SessionIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/RoleIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    }
+                ],
+                "tags": [
+                    "People",
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of people in session role",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/resources/{session_id}/roles/{role_id}/members/{person_id}": {
             "post": {
-                "summary": "Add an attendee to specifc session",
+                "summary": "Add an people to specifc session with specifc session role",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -1032,6 +1106,9 @@
                     },
                     {
                         "$ref": "#/parameters/PersonIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/RoleIDParam"
                     },
                     {
                         "$ref": "#/parameters/SessionIDParam"
@@ -1046,13 +1123,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "The attendees",
+                        "description": "The people added",
                         "schema": {
                             "$ref": "#/definitions/PlaceHolder"
                         }
                     },
                     "409": {
-                        "description": "The attendee people is already in the session.",
+                        "description": "The people people is already in the session with this role.",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -1066,7 +1143,7 @@
                 }
             },
             "delete": {
-                "summary": "Delete person from session attendee list",
+                "summary": "Delete person from session attendee list with certain role",
                 "description": "Delete person from session attendee list\n",
                 "parameters": [
                     {
@@ -1074,6 +1151,9 @@
                     },
                     {
                         "$ref": "#/parameters/PersonIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/RoleIDParam"
                     },
                     {
                         "$ref": "#/parameters/SessionIDParam"
@@ -1105,6 +1185,194 @@
                 }
             }
         },
+        "/events/{event_id}/sessions/roles": {
+            "get": {
+                "summary": "Get all session roles defined in this event",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The array of session roles defined",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PlaceHolder"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Define new session role",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "name": "role",
+                        "in": "body",
+                        "description": "the new role to be defined",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The new role defined",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PlaceHolder"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/events/{event_id}/sessions/roles/{role_id}": {
+            "patch": {
+                "summary": "update the role definition",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/RoleIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "name": "role",
+                        "in": "body",
+                        "description": "the role to be updated",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The role updated",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "update the role definition",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/RoleIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    },
+                    {
+                        "name": "role",
+                        "in": "body",
+                        "description": "the role to be updated",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The role updated",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "delete the session role defined. The people assigned with this role in sessions will be unlinked.",
+                "description": "Placeholder\n",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/EventIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/RoleIDParam"
+                    },
+                    {
+                        "$ref": "#/parameters/IDSystemParam"
+                    }
+                ],
+                "tags": [
+                    "Session"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The role deleted",
+                        "schema": {
+                            "$ref": "#/definitions/PlaceHolder"
+                        }
+                    },
+                    "default": {
+                        "description": "General 400/500 error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
         "/events/{event_id}/sessions/tracks": {
             "get": {
                 "summary": "Get all defined Session Tracks",
@@ -1119,7 +1387,7 @@
                 ],
                 "tags": [
                     "Session",
-                    "Group"
+                    "Track"
                 ],
                 "responses": {
                     "200": {
@@ -1159,7 +1427,7 @@
                 ],
                 "tags": [
                     "Session",
-                    "Group"
+                    "Track"
                 ],
                 "responses": {
                     "200": {
@@ -1194,7 +1462,7 @@
                 ],
                 "tags": [
                     "Session",
-                    "Group"
+                    "Track"
                 ],
                 "responses": {
                     "200": {
@@ -1227,7 +1495,7 @@
                 ],
                 "tags": [
                     "Session",
-                    "Group"
+                    "Track"
                 ],
                 "responses": {
                     "200": {
@@ -1245,7 +1513,7 @@
                 }
             }
         },
-        "/events/{event_id}/sessions/tracks/{track_id}/list": {
+        "/events/{event_id}/sessions/tracks/{track_id}/member": {
             "get": {
                 "summary": "Get all sessions in the track",
                 "description": "This request will return basic info of sessions in the track. \n",
@@ -1262,7 +1530,7 @@
                 ],
                 "tags": [
                     "Session",
-                    "Group"
+                    "Track"
                 ],
                 "responses": {
                     "200": {
@@ -1280,44 +1548,9 @@
                 }
             }
         },
-        "/events/{event_id}/sessions/custom_fields": {
+        "/event/{event_id}/images": {
             "get": {
-                "summary": "Get all defined Custom Fields",
-                "description": "This request will return an array of people custom fields. \n",
-                "parameters": [
-                    {
-                        "$ref": "#/parameters/EventIDParam"
-                    },
-                    {
-                        "$ref": "#/parameters/IDSystemParam"
-                    }
-                ],
-                "tags": [
-                    "Session",
-                    "Customize"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "The array of custom fields defined in People",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/ResponseGeneralCustomFields"
-                            }
-                        }
-                    },
-                    "default": {
-                        "description": "General 400/500 error",
-                        "schema": {
-                            "$ref": "#/definitions/Error"
-                        }
-                    }
-                }
-            }
-        },
-        "/event/{event_id}/resources/pictures": {
-            "get": {
-                "summary": "Get the info of pictures uploaded for specific event",
+                "summary": "Get the info of image uploaded for specific event",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -1332,7 +1565,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "the array of picture info",
+                        "description": "the array of image info",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -1349,8 +1582,8 @@
                 }
             },
             "post": {
-                "summary": "Upload new picture resource.",
-                "description": "In person profile or company logo, this uploaded picture can be used with the response filename (not url).\n",
+                "summary": "Upload new image resource.",
+                "description": "In person profile or company logo, this uploaded image can be used with the responsed resource id (not url).\n",
                 "parameters": [
                     {
                         "$ref": "#/parameters/EventIDParam"
@@ -1385,9 +1618,9 @@
                 }
             }
         },
-        "/event/{event_id}/resources/pictures/{resource_id}": {
+        "/event/{event_id}/images/{resource_id}": {
             "get": {
-                "summary": "Get the info of specifc picture uploaded",
+                "summary": "Get the info of specifc images uploaded",
                 "description": "Placeholder\n",
                 "parameters": [
                     {
@@ -1939,7 +2172,7 @@
         },
         "RequestUploadAssociatePicture": {
             "type": "object",
-            "description": "Use this structure if you want Eventmobi to download the picture from Internet locations and associate picture. You will need to specify image cropping info if the picture is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
+            "description": "Use this structure if you want Eventmobi to download the image from Internet locations and associate image. You will need to specify image cropping info if it is not square (same height and length). This will overwrite the picture_url in base profile, and the value in picture_url will be ignored.",
             "properties": {
                 "url": {
                     "type": "string",
@@ -2302,6 +2535,13 @@
             "name": "track_id",
             "in": "path",
             "description": "the track ID.",
+            "required": true,
+            "type": "string"
+        },
+        "RoleIDParam": {
+            "name": "role_id",
+            "in": "path",
+            "description": "the session role ID.",
             "required": true,
             "type": "string"
         },
