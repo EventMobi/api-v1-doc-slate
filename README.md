@@ -27,7 +27,11 @@ You're going to need:
 # 2. convert swagger to slate
 ./convert-swagger.sh 	
 
+<<<<<<< HEAD
 #this will expand the swagger.json to swagger-expanded.json (to render $ref) and then convert to ./source/index.html.md for slate
+=======
+Now that Slate is all set up on your machine, you'll probably want to learn more about [editing Slate markdown](https://github.com/lord/slate/wiki/Markdown-Syntax), or [how to publish your docs](https://github.com/lord/slate/wiki/Deploying-Slate).
+>>>>>>> lord/master
 
 # 3. publich or serve
 ./deploy.sh 	# to deploy this to github page
