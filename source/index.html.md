@@ -5,6 +5,12 @@ search: true
 ---
 
 # EventMobi API V1 Spec 0.6.1
+Eventmobi Public API documentation
+
+<aside class="notice">
+Note: To use json response, please add ".json" at the end of each request.
+</aside>
+
 > ### Consumes  
 > `application/xml`  
 
@@ -12,13 +18,14 @@ search: true
 > `application/xml`
 > `application/json`
 
+# Authorization
 ### Authorization: APIKeySecurity
 Type | Name | In | Description
 --- | --- | --- | ---
 apiKey | X-API-KEY | header | Please ask for your API Key from support team
 
 
-
+# Events
 ## GET /events/{event_id}
 ### Get specific event info with sections 
 
@@ -203,7 +210,7 @@ Http code | Type | Description
 400 | object | Bad Request
 404 | object | Not Found
 
-
+# Sections
 ## GET /events/{event_id}/sections/{section_id}
 ### Get specific section info with items 
 
@@ -382,6 +389,7 @@ Http code | Type | Description
 404 | object | Not Found
 
 
+# Items
 ## POST /events/{event_id}/sections/{section_id}/items
 ### Add a new item in section 
 
