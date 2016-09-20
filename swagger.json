@@ -34,7 +34,7 @@
         "/events/{event_id}": {
             "get": {
                 "summary": "get specific event info with sections",
-                "description": "This is getting the general event info with all section settings. The Speaker, Attendee, Sessions and other data are all stored in differen sections, as the \"type\" in section data indicated.",
+                "description": "This is getting the general event info with all section settings. The Speaker, Attendee, Sessions and other data are all stored in different sections, as the \"type\" in section data indicated.",
                 "parameters": [
                     {
                         "$ref": "#/parameters/EventIDParam"
@@ -138,7 +138,7 @@
         "/events/{event_id}/sections/{section_id}": {
             "get": {
                 "summary": "get specific section info with items",
-                "description": "This is getting the general section info with all items data and custom fields if they're available. The Speaker, Attendee, Sessions and other data are all stored in differen sections, as the \"type\" in section data indicated.",
+                "description": "This is getting the general section info with all items data and custom fields if they're available. The Speaker, Attendee, Sessions and other data are all stored in different sections, as the \"type\" in section data indicated.",
                 "parameters": [
                     {
                         "$ref": "#/parameters/EventIDParam"
@@ -420,7 +420,7 @@
                 }
             },
             "delete": {
-                "summary": "deleta specific item",
+                "summary": "delete specific item",
                 "parameters": [
                     {
                         "$ref": "#/parameters/EventIDParam"
@@ -592,7 +592,7 @@
                 }
             },
             "delete": {
-                "summary": "deleta specific item with external id",
+                "summary": "delete specific item with external id",
                 "parameters": [
                     {
                         "$ref": "#/parameters/EventIDParam"
@@ -1127,7 +1127,7 @@
                 },
                 "location": {
                     "type": "string",
-                    "description": "***Session***: locatio of session"
+                    "description": "***Session***: location of session"
                 },
                 "speakers": {
                     "type": "string",
@@ -1201,7 +1201,7 @@
         },
         "SuccessEnvolope": {
             "type": "object",
-            "description": "the general envolope for all responses. The \"response\" section will be different for each endpoint",
+            "description": "the general envelope for all responses. The \"response\" section will be different for each endpoint",
             "properties": {
                 "status": {
                     "type": "string",

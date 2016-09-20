@@ -24,7 +24,6 @@ Type | Name | In | Description
 --- | --- | --- | ---
 apiKey | X-API-KEY | header | Please ask for your API Key from support team
 
-
 # Events
 ## GET /events/{event_id}
 ### Get specific event info with sections 
@@ -127,7 +126,7 @@ Content-Type: application/xml
 }
 ```
 
-This is getting the general event info with all section settings. The Speaker, Attendee, Sessions and other data are all stored in differen sections, as the &quot;type&quot; in section data indicated.
+This is getting the general event info with all section settings. The Speaker, Attendee, Sessions and other data are all stored in different sections, as the &quot;type&quot; in section data indicated.
 
 
 ### Parameters
@@ -209,6 +208,7 @@ Http code | Type | Description
 200 | response | The event updated
 400 | object | Bad Request
 404 | object | Not Found
+
 
 # Sections
 ## GET /events/{event_id}/sections/{section_id}
@@ -307,7 +307,7 @@ Content-Type: application/xml
 }
 ```
 
-This is getting the general section info with all items data and custom fields if they&#039;re available. The Speaker, Attendee, Sessions and other data are all stored in differen sections, as the &quot;type&quot; in section data indicated.
+This is getting the general section info with all items data and custom fields if they&#039;re available. The Speaker, Attendee, Sessions and other data are all stored in different sections, as the &quot;type&quot; in section data indicated.
 
 
 ### Parameters
@@ -663,7 +663,7 @@ Http code | Type | Description
 404 | object | Not Found
 
 ## DELETE /events/{event_id}/sections/{section_id}/items/{item_id}
-### Deleta specific item 
+### Delete specific item 
 
 ```http
 DELETE /en/api/v1/events/{event_id}/sections/{section_id}/items/{item_id} HTTP/1.1
@@ -911,7 +911,7 @@ Http code | Type | Description
 404 | object | Not Found
 
 ## DELETE /events/{event_id}/sections/{section_id}/xitems/{external_item_id}
-### Deleta specific item with external id 
+### Delete specific item with external id 
 
 ```http
 DELETE /en/api/v1/events/{event_id}/sections/{section_id}/xitems/{external_item_id} HTTP/1.1
@@ -1488,7 +1488,7 @@ description | string | ***Session***: description of session (required)
 date | string | ***Session***: date of session (required)
 start_time | string | ***Session***: start time of session (required)
 end_time | string | ***Session***: end time of session
-location | string | ***Session***: locatio of session
+location | string | ***Session***: location of session
 speakers | string | ***Session***: comma separated list of speakers by external id’s
 tracks | string | ***Session***: comma separated list of tracks by external id’s
 attendees | string | ***Session***: comma separated list of attendees by emails
@@ -1516,7 +1516,7 @@ external_id | string | ***Shared***: your code for representing this item
 }
 ```
 
-the general envolope for all responses. The &quot;response&quot; section will be different for each endpoint
+the general envelope for all responses. The &quot;response&quot; section will be different for each endpoint
 
 	
 ### Fields
