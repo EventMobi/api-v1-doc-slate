@@ -369,8 +369,15 @@ Remember — a happy kitten is an authenticated kitten!
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
       ga('create', 'UA-84613642-1', 'auto');
-      ga('send', 'pageview');
+      //ga('send', 'pageview');
+      ga('send', 'pageview', { 'page': location.pathname + location.search + location.hash});
 
+      // jQuery(document).ready(function () {
+      // 	jQuery('.menu a').click(function(){
+      // 		var match = jQuery(this).attr('href').match(/#\S+/);
+      // 		ga('send', 'pageview', location.pathname + match[0]);
+      // 	});
+      // });
     </script>
   </body>
 </html>
